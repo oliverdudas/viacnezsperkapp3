@@ -1,0 +1,9 @@
+<div>
+    <h2>List Greetingss</h2>
+
+    <div ng-repeat="user in users track by $index" style="padding: 5px; margin: 5px; border: 1px solid green;">
+        Username: {{user.username}} Age: {{user.age}}
+    </div>
+
+    <input type="button" ng-click="addUser()" value="Add new User">
+</div>

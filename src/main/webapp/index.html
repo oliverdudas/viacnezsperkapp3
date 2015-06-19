@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="viacnezsperk">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="language" content="SK"/>
+    <meta http-equiv="Content-Language" content="sk"/>
+    <meta name="description" content="Robecca's Fashion"/>
+    <meta name="keywords" content="viacnezsperk,deti,sperk"/>
+    <title>Deti</title>
+    <link rel="stylesheet" type="text/css" href="/css/sperk.css"/>
+    <script type="text/javascript" src="/js/cufon/cufon-yui.js"></script>
+    <script type="text/javascript" src="/js/cufon/ArnoPro_400.font.js"></script>
+    <script type="text/javascript" src="/js/cufon/cufon.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+
+    <header>
+        <div ui-view="header"></div>
+    </header>
+
+    <!--<section>-->
+    <!--</section>-->
+
+    <div class="container">
+        <div ui-view="content"></div>
+    </div>
+
+    <footer id="footer">
+        <div ui-view="footer"></div>
+    </footer>
+</div>
+
+</body>
+
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="/js/vendors/angular-ui-router.min.js"></script>
+<script src="/js/vendors/angular-google-gapi.latest.min.js"></script>
+<script src="/js/vendors/angular-animate.min.js"></script>
+<script src="/js/vendors/angular-translate.min.js"></script>
+
+<script src="/js/app/app.js"></script>
+<script src="/js/app/home/home.js"></script>
+<script src="/js/app/login/login.js"></script>
+<script src="/js/app/adduser/adduser.js"></script>
+<script src="/js/app/childoverview/childoverview.js"></script>
+<script src="/js/app/translation/translation.js"></script>
+<script src="/js/app/model/model.js"></script>
+
+</body>
+</html>

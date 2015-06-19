@@ -1,0 +1,466 @@
+body {
+    background: url("../images/main-bg.jpg") repeat-x fixed center top transparent;
+    color: #474747;
+    font: 100%/1.125em Georgia, "Times New Roman", Times, serif;
+    /*font-family: "Times New Roman", arial, sans-serif;*/
+    /*font-size: 1.2em;*/
+    /*font-family: verdana,helvetica,arial,sans-serif;*/
+    /*font-family: verdana,helvetica,arial,sans-serif;*/
+
+    position: relative;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+html, body, div, span, object, iframe, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, var, fieldset, form, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+h1.title {
+    margin-bottom: 0;
+}
+
+h1 {
+    color: black;
+    font-size: 36px;
+    line-height: 1.2em;
+    /*margin: 0 0 0.75em;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    padding: 0;
+}
+
+h2 {
+    color: #000;
+    font-weight: normal;
+}
+
+#main {
+    font-size: 0.813em;
+    min-width: 960px;
+}
+
+header {
+    background: url("../images/tail-top.png") repeat-x scroll center top transparent;
+}
+
+article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+    display: block;
+}
+
+.container {
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+}
+
+header .container_2 {
+    height: 196px;
+    position: relative;
+    z-index: 2;
+}
+
+.home header .grid_2 {
+    border: 0 none;
+}
+
+.container_2 .grid_2 {
+    width: 950px;
+}
+
+.container_2 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
+header .grid_2 {
+    border-bottom: 3px solid #1C1C1C;
+    height: 193px;
+
+    display: inline;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.contentWrapper {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 20px;
+}
+
+.logo {
+    left: 0;
+    position: absolute;
+    top: 99px;
+}
+
+.logo a.logo-link {
+    float: left;
+}
+
+a {
+    border: 0 none;
+    color: #89181E;
+    text-decoration: underline;
+}
+
+a img {
+    border: 0 none;
+}
+
+img {
+    display: inline-block;
+    vertical-align: text-bottom;
+    border-radius: 8px 8px 8px 8px;
+}
+
+table.loginTable {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginTable td {
+    padding: 5px;
+}
+
+.loginTable label {
+    width: 150px;
+    text-align: right;
+}
+
+ul.nav {
+    max-width: 960px;
+}
+
+ul.nav {
+    line-height: 1;
+}
+
+ul.nav {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    margin: 0 0 1.5em 1.5em;
+    padding: 0;
+}
+
+ul {
+    list-style: disc outside none;
+}
+
+ul.nav > li {
+    font-size: 12px;
+}
+
+ul.nav li {
+    float: left;
+    position: relative;
+}
+
+ul.nav > li > a {
+    height: 67px;
+    line-height: 67px;
+    padding: 0 25px;
+}
+
+ul.nav a, ul.nav a:visited {
+    color: #DAD8D9;
+}
+
+ul.nav a {
+    font-family: "Times New Roman", Times, serif;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+ul.nav a {
+    display: block;
+    position: relative;
+}
+
+.denied {
+    color: #FF0000;
+}
+
+.adminmenu {
+    margin-top: 30px;
+}
+
+.adminmenu a {
+    padding: 20px 0;
+}
+
+.contentTitle {
+    display: inline-block;
+}
+
+.contentMenuItem {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.tableWrapper {
+    background: none repeat scroll 0 0 #DCDCDC;
+    border: 1px solid #FFFFFF;
+    border-radius: 14px 14px 14px 14px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 20px;
+    display: inline-block;
+}
+
+.tableWrapper tbody tr {
+    cursor: pointer;
+}
+
+.tableWrapper tbody tr:hover td.td, .tableWrapper tbody tr:hover td.firsttd, .tableWrapper tbody tr:hover td.lasttd {
+    background-color: #000;
+    color: #FFF;
+    /*border-radius: 5px 5px 5px 5px;*/
+}
+
+.tableWrapper tbody td div, .tableWrapper thead th {
+    padding: 5px;
+}
+
+.tableWrapper tbody tr:hover td.firsttd {
+    border-radius: 5px 0 0 5px;
+}
+
+.tableWrapper tbody tr:hover td.lasttd {
+    border-radius: 0 5px 5px 0;
+}
+
+.tableContent {
+    padding: 10px;
+    border-radius: 14px 14px 14px 14px;
+    border: 1px solid #FFF;
+}
+
+/*.tableWrapper tbody tr td:first-child {*/
+/*-moz-border-radius-topleft: 5px;*/
+/*-moz-border-radius-bottomleft: 5px;*/
+/*-webkit-border-top-left-radius: 5px;*/
+/*-webkit-border-bottom-left-radius: 5px;*/
+
+/*}*/
+
+/*.tableWrapper tbody tr td:last-child {*/
+/*-moz-border-radius-topright: 5px;*/
+/*-moz-border-radius-bottomright: 5px;*/
+/*-webkit-border-top-right-radius: 5px;*/
+/*-webkit-border-bottom-right-radius: 5px;*/
+/*}*/
+
+.formTable {
+
+}
+
+.formTable tr td {
+    padding: 5px;
+}
+
+.formTable .label {
+    color: #757475;
+}
+
+input, textarea {
+    padding: 4px;
+    border: 1px solid #9C9C9C;
+    border-radius: 5px 5px 5px 5px;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    border: 1px solid #000;
+}
+
+/*PAGINATION*/
+.pagination {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.pagingItem a {
+    border: 1px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    color: #89181E;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+    padding: 2px 8px;
+    text-decoration: none !important;
+}
+
+.pagingItem a:hover {
+    border: 1px solid #89181E;
+    border-radius: 5px 5px 5px 5px;
+    color: #89181E;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pagingItemCurrent {
+    background-color: #89181E;
+    border: 1px #89181E;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+    padding: 3px 9px;
+}
+
+.disabledItem {
+    background-color: transparent;
+    border: 1px #000;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0;
+    padding: 2px 9px;
+}
+
+.pagination .info {
+    float: right;
+    padding-right: 5px;
+    color: #969696;
+}
+
+.mainImg {
+    float: left;
+    margin: 0 20px 10px 0;
+}
+
+.submitArea {
+    padding: 10px;
+}
+
+.form-error {
+    color: #FF0000;
+    padding-left: 5px;
+}
+
+.close-window {
+    background-color: #89181E;
+}
+
+.close-window a {
+    color: #000 !important;
+}
+
+.close-window a:hover {
+    color: #FFF !important;
+}
+
+.close-window:hover {
+    outline: 2px solid #FFF;
+}
+
+.insightClass:hover {
+    color: #FFF;
+}
+
+.detailTable td {
+    padding: 5px 5px 5px 0;
+    font-size: 1.3em;
+}
+
+.detailTable td.label {
+    color: #000;
+    padding-right: 20px !important;
+    white-space: nowrap;
+}
+
+.detailTable td.value {
+    color: #474747;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+footer#footer #footerContent {
+    /*margin: 10px auto;*/
+    /*border-top: 3px solid #1C1C1C;*/
+    /*overflow: hidden;*/
+    /*padding: 38px 0 35px;*/
+    /*width: 950px;*/
+
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+}
+
+footer#footer #footerContent a {
+    text-decoration: none;
+}
+
+/*ANGULAR*/
+
+.fade.ng-leave {
+    transition:0.5s linear all;
+    opacity:1;
+}
+.fade.ng-leave.ng-leave-active {
+    opacity:0;
+}
+
+/* Have to set height explicity on ui-view
+to prevent collapsing during animation*/
+.ui-view-container {
+    position: relative;
+    height: 65px;
+}
+
+[ui-view].ng-enter, [ui-view].ng-leave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-transition:all .5s ease-in-out;
+    -moz-transition:all .5s ease-in-out;
+    -o-transition:all .5s ease-in-out;
+    transition:all .5s ease-in-out;
+}
+
+[ui-view].ng-enter {
+    opacity: 0;
+    -webkit-transform:scale3d(0.5, 0.5, 0.5);
+    -moz-transform:scale3d(0.5, 0.5, 0.5);
+    transform:scale3d(0.5, 0.5, 0.5);
+}
+
+[ui-view].ng-enter-active {
+    opacity: 1;
+    -webkit-transform:scale3d(1, 1, 1);
+    -moz-transform:scale3d(1, 1, 1);
+    transform:scale3d(1, 1, 1);
+}
+
+[ui-view].ng-leave {
+    opacity: 1;
+    -webkit-transform:translate3d(0, 0, 0);
+    -moz-transform:translate3d(0, 0, 0);
+    transform:translate3d(0, 0, 0);
+}
+
+[ui-view].ng-leave-active {
+    opacity: 0;
+    -webkit-transform:translate3d(100px, 0, 0);
+    -moz-transform:translate3d(100px, 0, 0);
+    transform:translate3d(100px, 0, 0);
+}

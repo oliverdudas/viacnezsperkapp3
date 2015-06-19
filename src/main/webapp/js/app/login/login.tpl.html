@@ -1,0 +1,42 @@
+<div class="contentWrapper">
+
+    <h2 style="font-family: Times New Roman,Times,serif;text-align: center;">{{'your_child' | translate}}</h2>
+
+    <form id="loginForm" action="j_spring_security_check" method="post">
+        <table class="loginTable">
+            <tr>
+                <td>
+                    {{'login_name' | translate}}:
+                </td>
+                <td>
+                    <input id="j_username"
+                           name="j_username"
+                           value=''
+                           ng-model="username"
+                           size="20"
+                           maxlength="50"
+                           type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{'login_password' | translate}}:
+                </td>
+                <td>
+                    <input id="j_password"
+                           name="j_password"
+                           size="20"
+                           ng-model="password"
+                           maxlength="50"
+                           type="password"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center">
+                    <input type="button" ng-click="login()" value="{{'login_button' | translate}}"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
