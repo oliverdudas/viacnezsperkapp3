@@ -6,6 +6,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by olo on 17. 6. 2015.
@@ -13,7 +14,6 @@ import java.util.Date;
 public class UserModel {
 
     public static final String KIND = "User";
-    public static final String GALLERY_ITEM_KEY_NAME = "galleryItems";
 
     private String key;
 
@@ -31,6 +31,9 @@ public class UserModel {
     private String modifiedBy;
     private String mainURL;
     private Text content;
+
+    private List<GalleryItemModel> galleryItems;
+    private List<RoleModel> roles;
 
     public Entity toEntity(Key key) {
         Entity entity = new Entity(key);
@@ -194,4 +197,19 @@ public class UserModel {
         this.content = content;
     }
 
+    public List<GalleryItemModel> getGalleryItems() {
+        return galleryItems;
+    }
+
+    public void setGalleryItems(List<GalleryItemModel> galleryItems) {
+        this.galleryItems = galleryItems;
+    }
+
+    public List<RoleModel> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleModel> roles) {
+        this.roles = roles;
+    }
 }

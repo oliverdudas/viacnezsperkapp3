@@ -1,11 +1,7 @@
 package sk.olo.sperk.model;
 
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Text;
-
-import java.util.Date;
 
 /**
  * Created by olo on 19. 6. 2015.
@@ -18,18 +14,15 @@ public class GalleryItemModel {
     private String key;
 
     private String gphotoId;
-    private Integer index;
+    private Long index;
     private String imageUrl;
     private String thumbUrl;
 
-    public Entity toEntity(String parentKeyName) {
+    public Entity toEntity() {
         if (parentKey == null) {
             throw new RuntimeException("MISSING_PARENT_KEY");
         }
-        if (parentKeyName == null) {
-            throw new RuntimeException("MISSING_PARENT_KEY_NAME");
-        }
-        Entity entity = new Entity(KIND, parentKeyName, KeyFactory.stringToKey(parentKey));
+        Entity entity = new Entity(KIND, KeyFactory.stringToKey(parentKey));
         entity.setProperty("gphotoId", gphotoId);
         entity.setProperty("index", index);
         entity.setProperty("imageUrl", imageUrl);
@@ -42,7 +35,7 @@ public class GalleryItemModel {
         itemModel.setKey(KeyFactory.keyToString(entity.getKey()));
         itemModel.setParentKey(KeyFactory.keyToString(entity.getKey().getParent()));
         itemModel.setGphotoId(entity.getProperty("gphotoId") != null ? (String) entity.getProperty("gphotoId") : null);
-        itemModel.setIndex(entity.getProperty("index") != null ? (Integer) entity.getProperty("index") : null);
+        itemModel.setIndex(entity.getProperty("index") != null ? (Long) entity.getProperty("index") : null);
         itemModel.setImageUrl(entity.getProperty("imageUrl") != null ? (String) entity.getProperty("imageUrl") : null);
         itemModel.setThumbUrl(entity.getProperty("thumbUrl") != null ? (String) entity.getProperty("thumbUrl") : null);
         return itemModel;
@@ -72,11 +65,11 @@ public class GalleryItemModel {
         this.gphotoId = gphotoId;
     }
 
-    public Integer getIndex() {
+    public Long getIndex() {
         return index;
     }
 
-    public void setIndex(Integer index) {
+    public void setIndex(Long index) {
         this.index = index;
     }
 

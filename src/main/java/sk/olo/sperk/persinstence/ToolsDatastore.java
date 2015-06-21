@@ -4,6 +4,7 @@ import com.google.api.server.spi.auth.common.User;
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.search.query.QueryParserFactory;
 import sk.olo.sperk.model.GalleryItemModel;
+import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
 import java.util.ArrayList;
@@ -54,16 +55,35 @@ public class ToolsDatastore implements ToolsPersistence {
     @Override
     public UserModel getFullUser(String key) {
 //        SELECT * WHERE ANCESTOR IS KEY('Person', 'amym')
+//        SELECT * WHERE ANCESTOR IS KEY('sd5f4g65sdf2g1s3dfg')
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query(KeyFactory.stringToKey(key));
         PreparedQuery preparedQuery = datastore.prepare(query);
 
         Iterable<Entity> iterable = preparedQuery.asIterable();
+        return buildModel(iterable);
+    }
+
+    private UserModel buildModel(Iterable<Entity> iterable) {
+        UserModel userModel = null;
+        List<RoleModel> roles = new ArrayList<>();
+        List<GalleryItemModel> galleryItems = new ArrayList<>();
         for(Entity entity : iterable) {
-//            users.add(UserModel.createModel(entity));
-            String s = "";
+            if (UserModel.KIND.equals(entity.getKind())) {
+                userModel = UserModel.createModel(entity);
+            } else if (GalleryItemModel.KIND.equals(entity.getKind())) {
+                galleryItems.add(GalleryItemModel.createModel(entity));
+            } else if (RoleModel.KIND.equals(entity.getKind())) {
+                roles.add(RoleModel.createModel(entity));
+            }
         }
-        return null;
+
+        if (userModel != null) {
+            userModel.setGalleryItems(galleryItems);
+            userModel.setRoles(roles);
+        }
+
+        return userModel;
     }
 
     @Override
@@ -92,7 +112,15 @@ public class ToolsDatastore implements ToolsPersistence {
     @Override
     public String putGalleryItem(GalleryItemModel galleryItemModel) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Entity entity = galleryItemModel.toEntity(UserModel.GALLERY_ITEM_KEY_NAME);
+        Entity entity = galleryItemModel.toEntity();
+        datastore.put(entity);
+        return KeyFactory.keyToString(entity.getKey());
+    }
+
+    @Override
+    public String putRole(RoleModel roleModel) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = roleModel.toEntity();
         datastore.put(entity);
         return KeyFactory.keyToString(entity.getKey());
     }

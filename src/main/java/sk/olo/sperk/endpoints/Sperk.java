@@ -1,23 +1,18 @@
 package sk.olo.sperk.endpoints;
 
-import com.google.api.server.spi.auth.EndpointsAuthenticator;
-import com.google.api.server.spi.auth.GoogleOAuth2Authenticator;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.config.AuthLevel;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.users.User;
-import sk.olo.sperk.endpoints.auth.SperkAuthenticator;
 import sk.olo.sperk.model.GalleryItemModel;
 import sk.olo.sperk.model.KeyModel;
+import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 import sk.olo.sperk.service.UserService;
 import sk.olo.sperk.service.UserServiceImpl;
 import sk.olo.sperk.util.Constants;
 
 import javax.inject.Named;
-import javax.security.auth.login.CredentialException;
 import java.util.List;
 
 /**
@@ -66,6 +61,11 @@ public class Sperk {
     public KeyModel putGalleryItem(GalleryItemModel galleryItemModel) {
         UserService service = new UserServiceImpl();
         return new KeyModel(service.putGalleryItem(galleryItemModel));
+    }
+
+    public KeyModel putRole(RoleModel roleModel) {
+        UserService service = new UserServiceImpl();
+        return new KeyModel(service.putRole(roleModel));
     }
 
     public UserModel getUser(@Named("key") String key) {

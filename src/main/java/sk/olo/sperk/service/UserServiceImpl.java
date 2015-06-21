@@ -2,6 +2,7 @@ package sk.olo.sperk.service;
 
 import com.google.appengine.api.datastore.Entity;
 import sk.olo.sperk.model.GalleryItemModel;
+import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 import sk.olo.sperk.persinstence.ToolsDatastore;
 import sk.olo.sperk.persinstence.ToolsPersistence;
@@ -47,6 +48,12 @@ public class UserServiceImpl implements UserService {
     public String putGalleryItem(GalleryItemModel galleryItemModel) {
         ToolsPersistence persistence = new ToolsDatastore();
         return persistence.putGalleryItem(galleryItemModel);
+    }
+
+    @Override
+    public String putRole(RoleModel roleModel) {
+        ToolsPersistence persistence = new ToolsDatastore();
+        return persistence.putRole(roleModel);
     }
 
     @Override
