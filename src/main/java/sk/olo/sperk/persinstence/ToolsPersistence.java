@@ -2,6 +2,7 @@ package sk.olo.sperk.persinstence;
 
 import com.google.appengine.api.datastore.Entity;
 import sk.olo.sperk.model.GalleryItemModel;
+import sk.olo.sperk.model.KeyModel;
 import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
@@ -28,4 +29,6 @@ public interface ToolsPersistence {
     String storePersonWithImages();
 
     List<Entity> loadPersonGroupByAncestor(String id);
+
+    String putFullUser(UserModel userModel);
 }

@@ -1,3 +1,66 @@
-<div>
-    {{child}}
+<!--<link rel="stylesheet" href="/js/prettyphoto/css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8"/>-->
+<!--<script src="/js/prettyphoto/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>-->
+
+<style type="text/css">
+    #homeGallery {
+        /*display: inline-block;*/
+    }
+
+    #homeGallery .homeGalleryItemWrapper {
+        display: inline-block;
+        padding: 3px 3px 0 0;
+    }
+</style>
+
+<!--<script type="text/javascript" charset="utf-8">-->
+    <!--$(document).ready(function () {-->
+        <!--$("a[rel^='prettyPhoto']").prettyPhoto({-->
+            <!--social_tools: '',-->
+            <!--show_title: false,-->
+            <!--default_width: 600,-->
+            <!--default_height: 800-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+<div class="contentWrapper">
+
+    <div>
+        <p>
+            <font size="3">
+                <img ng-show="validator.validMainURL" src="{{user.mainURL}}" alt="..." class="mainImg"/>
+
+                <div>
+                    <table class="detailTable">
+                        <tr ng-show="validator.validFirstname">
+                            <td class="label">{{'name' | translate}}:</td>
+                            <td class="value">{{user.firstname}}</td>
+                        </tr>
+                        <tr ng-show="validator.validBornYear">
+                            <td class="label">{{'bornYear' | translate}}:</td>
+                            <td class="value">{{user.bornYear}}</td>
+                        </tr>
+                        <tr ng-show="validator.validResidence">
+                            <td class="label">{{'residence' | translate}}:</td>
+                            <td class="value">{{user.residence}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-show="validator.validGalleryItems" id="homeGallery">
+                    <hr/>
+                    <h2>{{'gallery' | translate}}</h2>
+                            <span ng-repeat="item in user.galleryItems track by $index" class="homeGalleryItemWrapper">
+                                <a href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">
+                                    <img src="{{item.thumbUrl}}" alt="...">
+                                </a>
+                            </span>
+                </div>
+                <hr/>
+                <h2>{{'socialInfo' | translate}}</h2>
+                {{user.content.value}}
+            </font>
+        </p>
+    </div>
+
 </div>
+

@@ -2,6 +2,7 @@ package sk.olo.sperk.service;
 
 import com.google.appengine.api.datastore.Entity;
 import sk.olo.sperk.model.GalleryItemModel;
+import sk.olo.sperk.model.KeyModel;
 import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
@@ -28,4 +29,8 @@ public interface UserService {
     String storePerson();
 
     List<Entity> loadPersonByAncestor(String id);
+
+    String createTestUser();
+
+    String putFullUser(UserModel userModel);
 }

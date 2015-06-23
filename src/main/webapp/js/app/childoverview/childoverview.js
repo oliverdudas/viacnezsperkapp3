@@ -15,6 +15,24 @@ angular.module('childoverview', [])
 
     .controller('ChildoverviewController', ['$scope', '$state', 'modelHolder', function ChildoverviewCtrl($scope, $state, modelHolder) {
 
-        $scope.child = modelHolder.getChild();
+        $scope.user = modelHolder.getChild();
+        $scope.validator = {
+            validMainURL: function() {
+                return angular.isDefined($scope.user.mainURL);
+            },
+            validFirstname: function() {
+                return angular.isDefined($scope.user.firstname);
+            },
+            validBornYear: function() {
+                return angular.isDefined($scope.user.bornYear);
+            },
+            validResidence: function() {
+                return angular.isDefined($scope.user.residence);
+            },
+            validGalleryItems: function() {
+                return angular.isDefined($scope.user.galleryItems);
+            }
+
+        };
 
     }]);

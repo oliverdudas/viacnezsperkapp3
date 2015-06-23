@@ -4,6 +4,7 @@ import com.google.api.server.spi.auth.common.User;
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.search.query.QueryParserFactory;
 import sk.olo.sperk.model.GalleryItemModel;
+import sk.olo.sperk.model.KeyModel;
 import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
@@ -84,6 +85,26 @@ public class ToolsDatastore implements ToolsPersistence {
         }
 
         return userModel;
+    }
+
+    @Override
+    public String putFullUser(UserModel userModel) {
+        Key newParentKey = generateKey(UserModel.KIND, 1);
+        Entity userModelEntity = userModel.toEntity(newParentKey);
+
+        List<Entity> galleryItemsList = new ArrayList<>();
+        for (GalleryItemModel galleryItemModel : userModel.getGalleryItems()) {
+            galleryItemModel.setParentKey(KeyFactory.keyToString(newParentKey));
+            Entity galleryItemEntity = galleryItemModel.toEntity();
+            galleryItemsList.add(galleryItemEntity);
+        }
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        datastore.put(userModelEntity);
+        datastore.put(galleryItemsList);
+
+        return KeyFactory.keyToString(newParentKey);
     }
 
     @Override

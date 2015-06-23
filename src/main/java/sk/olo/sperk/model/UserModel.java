@@ -22,7 +22,7 @@ public class UserModel {
     private String firstname;
     private String lastname;
     private Long age;
-    private Integer bornYear;
+    private Long bornYear;
     private String residence;
     private String socialInfo;
     private Date created;
@@ -62,7 +62,7 @@ public class UserModel {
         userModel.setFirstname(entity.getProperty("firstname") != null ? (String) entity.getProperty("firstname") : null);
         userModel.setLastname(entity.getProperty("lastname") != null ? (String) entity.getProperty("lastname") : null);
         userModel.setAge(entity.getProperty("age") != null ? (Long) entity.getProperty("age") : null);
-        userModel.setBornYear(entity.getProperty("bornYear") != null ? (Integer) entity.getProperty("bornYear") : null);
+        userModel.setBornYear(entity.getProperty("bornYear") != null ? (Long) entity.getProperty("bornYear") : null);
         userModel.setResidence(entity.getProperty("residence") != null ? (String) entity.getProperty("residence") : null);
         userModel.setSocialInfo(entity.getProperty("socialInfo") != null ? (String) entity.getProperty("socialInfo") : null);
         userModel.setCreated(entity.getProperty("created") != null ? (Date) entity.getProperty("created") : null);
@@ -125,11 +125,11 @@ public class UserModel {
         this.age = age;
     }
 
-    public Integer getBornYear() {
+    public Long getBornYear() {
         return bornYear;
     }
 
-    public void setBornYear(Integer bornYear) {
+    public void setBornYear(Long bornYear) {
         this.bornYear = bornYear;
     }
 

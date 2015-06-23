@@ -1,0 +1,90 @@
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function () {-->
+<!--$('.tableWrapper table tbody tr').click(function (e) {-->
+<!--var id = $(this).attr('id');-->
+<!--window.location = '${childFormUrl}?id=' + id;-->
+<!--});-->
+
+<!--$('.insightClass').click(function (e) {-->
+<!--e.stopPropagation();-->
+<!--});-->
+
+<!--var search = $('#searchId');-->
+<!--search.get(0).focus();-->
+<!--search.get(0).select();-->
+<!--});-->
+<!--</script>-->
+
+<div class="contentWrapper">
+
+    <h1 class="contentTitle">Zoznam detí</h1>
+
+    <h2 class="contentMenuItem">
+        <a href ng-click="addUser()">
+            {{'add_child' | translate}}
+        </a>
+    </h2>
+
+    <div>
+        <input type="button" value="tester" ng-click="test()">
+    </div>
+
+
+    <div>
+
+        <div class="tableWrapper">
+
+            <!--<div ng-repeat="user in users track by $index" style="padding: 5px; margin: 5px; border: 1px solid green;">-->
+                <!--Username: {{user.username}} Age: {{user.age}}-->
+            <!--</div>-->
+
+            <div class="tableContent">
+                <table class="childrentable" cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            <a href>{{'login_name' | translate}}</a>
+                        </th>
+                        <th>
+                            <a href>{{'name' | translate}}</a>
+                        </th>
+                        <th>
+                            <a href>{{'modified' | translate}}</a>
+                        </th>
+                        <th>
+                            <a href>{{'created' | translate}}</a>
+                        </th>
+                        <th>
+                            <span>{{'insight' | translate}}</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="child in users track by $index">
+                            <td class="firsttd">
+                                <div>{{child.username}}</div>
+                            </td>
+                            <td class="td">
+                                <div>{{child.firstname}}</div>
+                            </td>
+                            <td class="td">
+                                <div>{{child.modified}}</div>
+                            </td>
+                            <td class="td">
+                                <div>{{child.created}}</div>
+                            </td>
+                            <td class="lasttd">
+                                <div>
+                                    <a target="_blank" class="insightClass" href="#">{{'insight' | translate}}</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

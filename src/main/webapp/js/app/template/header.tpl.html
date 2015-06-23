@@ -11,12 +11,15 @@
 
         <nav>
             <ul class="nav">
-                <li>
-                   <a href> Email: {{getEmail()}}</a>
+                <li ng-show="!isLoginState()">
+                    <a href ng-click="logout()">{{'logout' | translate}}</a>
                 </li>
-                <li ng-show="isLogin()">
-                    <a href ng-click="logout()">Logout</a>
-                </li>
+                <!--<li>-->
+                   <!--<a href> Email: {{getEmail()}}</a>-->
+                <!--</li>-->
+                <!--<li ng-show="isLogin()">-->
+                    <!--<a href ng-click="logout()">Logout</a>-->
+                <!--</li>-->
             </ul>
         </nav>
 

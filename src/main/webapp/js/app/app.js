@@ -26,14 +26,14 @@ angular.module('viacnezsperk', [
         GAuth.setClient(CLIENT);
         GAuth.setScope('https://www.googleapis.com/auth/userinfo.email');
 
-        GAuth.checkAuth().then(
-            function () {
-                $state.go('home.list');
-            },
-            function () {
-                $state.go('home.login');
-            }
-        );
+        //GAuth.checkAuth().then(
+        //    function () {
+        //        $state.go('home.list');
+        //    },
+        //    function () {
+        //        $state.go('home.login');
+        //    }
+        //);
 
         $rootScope.logout = function () {
             GAuth.logout().then(
@@ -51,6 +51,10 @@ angular.module('viacnezsperk', [
 
         $rootScope.isLogin = function () {
             return GData.isLogin();
+        };
+
+        $rootScope.isLoginState = function () {
+            return 'home.login' === $state.current.name;
         };
 
         $rootScope.getEmail = function () {

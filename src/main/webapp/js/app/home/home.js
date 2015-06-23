@@ -21,8 +21,8 @@ angular.module('home', [])
             url: '/list',
             views: {
                 'content@': {
-                    controller: 'HomeController',
-                    templateUrl: 'js/app/app.tpl.html',
+                    controller: 'ListController',
+                    templateUrl: 'js/app/home/list.tpl.html',
                     resolve: {
                         users: function(GApi) {
                             return GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
@@ -38,13 +38,32 @@ angular.module('home', [])
 
     }])
 
-    .controller('HomeController', ['$scope', '$state', 'GApi', 'users', function HomeCtrl($scope, $state, GApi, users) {
+    .controller('ListController', ['$scope', '$state', 'GApi', 'users', function ListCtrl($scope, $state, GApi, users) {
 
         $scope.users = users;
 
         $scope.addUser = function () {
             $state.go('home.adduser');
         };
+
+        $scope.$on('$viewContentLoaded', function() {
+            Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
+        });
+
+        $scope.test = function() {
+            GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
+                console.log('returned');
+            }, function () {
+                console.log("error :(");
+            });
+        };
+
+        //$scope.$on('$routeChangeSuccess', function () {
+        //    Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
+        //});
+        //$scope.executeCufon = function() {
+        //    Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
+        //};
 
     }
     ])
