@@ -1,26 +1,119 @@
-<h3>Child</h3>
-<div>
-    Username: <input type="text" ng-model="userModel.username">
-</div>
-<div>
-    Password: <input type="text" ng-model="userModel.password">
-</div>
-<div>
-    Age: <input type="text" ng-model="userModel.age">
-</div>
+<div class="contentWrapper">
 
-<!--<h3>GalleryItem</h3>-->
-<!--<div>-->
-    <!--gphotoId: <input type="text" ng-model="galleryItemModel.gphotoId">-->
-<!--</div>-->
-<!--<div>-->
-    <!--index: <input type="text" ng-model="galleryItemModel.index">-->
-<!--</div>-->
-<!--<div>-->
-    <!--imageUrl: <input type="text" ng-model="galleryItemModel.imageUrl">-->
-<!--</div>-->
+    <h2 style="display: inline-block;">{{'child' | translate}}</h2>
 
-<div>
-    <input type="button" ng-click="put()" value="Put!">
-    <input type="button" ng-click="home()" value="Home">
+    <div class="formWrapper">
+
+        <form action="" name="childForm" id="childFormId" enctype="multipart/form-data">
+
+            <table class="formTable">
+                <tr>
+                    <td class="label" title="{{'required' | translate}}">{{'login_name' | translate}}*:</td>
+                    <td class="value">
+                        <input type="text" id="usernameId" ng-model="child.username"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" title="{{'required' | translate}}">{{'login_password' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" id="passwordId" ng-model="child.password"/>
+                        <input type="button" id="generateId" value="{{'generate' | translate}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'name' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" ng-model="child.firstname"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'bornYear' | translate}}:</td>
+                    <td class="value">
+                        <input ng-model="child.bornYear" type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'residence' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" ng-model="child.residence"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'main_url' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" id="mainUrlId" ng-model="child.mainURL"/>
+                        <span id="container">
+                            <a id="pickfiles" href="javascript:;">{{'select_file' | translate}}</a>
+                            <span id="filelist"></span>
+                            <a id="uploadfiles" style="display: none;" href="javascript:;">{{'upload_to_picasa' |
+                                translate}}</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'gallery' | translate}}:</td>
+                    <td class="value">
+                        <span id="container2">
+                            <a id="pickfiles2" href="javascript:;">{{'select_file' | translate}}</a>
+                            <span id="filelist2"></span>
+                            <a id="uploadfiles2" style="display: none;" href="javascript:;">{{'upload_to_picasa' |
+                                translate}}</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span id="galleryItems">
+                            <span ng-repeat="item in child.galleryItems" class="itemWrapper">
+                                <span class="deleteItem">
+                                    <a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |
+                                        translate}}</a>
+                                </span>
+                                <img src="{{item.thumbUrl}}" alt="...">
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" style="vertical-align: top;">{{'main_content' | translate}}:</td>
+                    <td class="value">
+                        <textarea id="contentId" ng-model="child.content"></textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="formTable systemdata">
+                <tr>
+                    <td class="label">{{'created' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" ng-model="child.created"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'createdBy' | translate}}:</td>
+                    <td class="value">{{child.createdBy}}</td>
+                </tr>
+                <tr>
+                    <td class="label">{{'modified' | translate}}:</td>
+                    <td class="value">
+                        <input type="text" ng-model="child.modified"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">{{'modifiedBy' | translate}}:</td>
+                    <td class="value">{{child.modifiedBy}}</td>
+                </tr>
+            </table>
+
+            <div class="submitArea">
+                <input type="button" ng-click="put()" name="childFormSubmit" value="{{'save' | translate}}">
+                <input type="button" ng-click="toList()" value="{{'cancel' | translate}}">
+                <input ng-show="child.key != null" type="submit" name="delete" id="deleteId"
+                       value="{{'delete' | translate}}" style="margin-left: 30px;">
+            </div>
+
+        </form>
+
+    </div>
+
 </div>

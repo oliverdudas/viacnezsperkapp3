@@ -46,6 +46,10 @@ angular.module('home', [])
             $state.go('home.adduser');
         };
 
+        $scope.edit = function (key) {
+            $state.go('home.adduser', {key: key});
+        };
+
         $scope.$on('$viewContentLoaded', function() {
             Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
         });

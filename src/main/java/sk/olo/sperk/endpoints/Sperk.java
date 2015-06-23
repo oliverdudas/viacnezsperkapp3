@@ -76,7 +76,7 @@ public class Sperk {
         return service.getUser(key);
     }
 
-    @ApiMethod(path = "usermodel/fulluser")
+    @ApiMethod(name="sperk.fulluser", path = "usermodel/fulluser")
     public UserModel getFullUser(@Named("key") String key) {
         UserService service = new UserServiceImpl();
         return service.getFullUser(key);

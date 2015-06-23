@@ -60,7 +60,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="child in users track by $index">
+                        <tr ng-repeat="child in users track by $index" ng-click="edit(child.key)">
                             <td class="firsttd">
                                 <div>{{child.username}}</div>
                             </td>

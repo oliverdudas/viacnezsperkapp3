@@ -2,14 +2,22 @@ angular.module('adduser', [])
 
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider.state('home.adduser', {
-            url: '/adduser',
+            url: '/adduser?key',
             views: {
                 'content@': {
                     controller: 'AddUserController',
                     templateUrl: 'js/app/adduser/adduser.tpl.html',
                     resolve: {
-                        fafa: function() {
-                            var jj = 5;
+                        child: function(GApi, $stateParams) {
+                            if ($stateParams.key) {
+                                return GApi.execute('viacnezsperkAPI', 'sperk.fulluser', {key: $stateParams.key}).then(function (resp) {
+                                    return resp;
+                                }, function () {
+                                    console.log("error :(");
+                                });
+                            } else {
+                                return {};
+                            }
                         }
                     }
                 }
@@ -18,13 +26,13 @@ angular.module('adduser', [])
 
     }])
 
-    .controller('AddUserController', ['$scope', '$state', 'GApi', function AddUserCtrl($scope, $state, GApi) {
+    .controller('AddUserController', ['$scope', '$state', 'GApi', 'child', function AddUserCtrl($scope, $state, GApi, child) {
 
-        $scope.userModel = {};
+        $scope.child = child;
         $scope.key = '';
 
         $scope.put = function () {
-            GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.userModel).then(function (resp) {
+            GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
                 $scope.key = resp.key;
                 $state.go('home.list');
             }, function () {
@@ -32,9 +40,9 @@ angular.module('adduser', [])
             });
         };
 
-        $scope.home = function() {
+        $scope.toList = function() {
             $state.go('home.list');
-        }
+        };
 
     }
     ]);
