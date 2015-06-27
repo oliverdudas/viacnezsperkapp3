@@ -93,9 +93,9 @@ header .grid_2 {
 }
 
 .contentWrapper {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-left: 20px;
+    /*margin-left: 5px;*/
+    /*margin-right: 5px;*/
+    /*padding-left: 20px;*/
 }
 
 .logo {
@@ -169,6 +169,7 @@ ul.nav > li {
 ul.nav li {
     float: left;
     position: relative;
+    margin-right: 30px;
 }
 
 ul.nav > li > a {
@@ -178,7 +179,7 @@ ul.nav > li > a {
 }
 
 ul.nav a, ul.nav a:visited {
-    color: #DAD8D9;
+    /*color: #DAD8D9;*/
 }
 
 ul.nav a {
@@ -279,9 +280,13 @@ ul.nav a {
 }
 
 input, textarea {
-    padding: 4px;
+    padding: 7px;
     border: 1px solid #9C9C9C;
     border-radius: 5px 5px 5px 5px;
+}
+
+input, textarea, button, .nav-pills li a {
+    box-shadow: 3px 5px 10px #888888;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover {
@@ -463,4 +468,8 @@ to prevent collapsing during animation*/
     -webkit-transform:translate3d(100px, 0, 0);
     -moz-transform:translate3d(100px, 0, 0);
     transform:translate3d(100px, 0, 0);
+}
+
+.tab-content {
+    padding: 10px;
 }

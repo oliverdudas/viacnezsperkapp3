@@ -1,0 +1,61 @@
+<div class="formWrapper">
+
+    <form action="" name="childForm" id="childFormId" enctype="multipart/form-data">
+
+        <table class="formTable">
+            <tr>
+                <td class="label" title="{{'required' | translate}}">{{'login_name' | translate}}*:</td>
+                <td class="value">
+                    <input type="text" id="usernameId" ng-model="child.username"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" title="{{'required' | translate}}">{{'login_password' | translate}}:</td>
+                <td class="value">
+                    <input type="text" id="passwordId" ng-model="child.password"/>
+                    <button type="button" class="btn btn-info">{{'generate' | translate}}</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{{'name' | translate}}:</td>
+                <td class="value">
+                    <input type="text" ng-model="child.firstname"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{{'bornYear' | translate}}:</td>
+                <td class="value">
+                    <input ng-model="child.bornYear" type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{{'residence' | translate}}:</td>
+                <td class="value">
+                    <input type="text" ng-model="child.residence"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" style="vertical-align: top;">{{'main_content' | translate}}:</td>
+                <td class="value">
+                    <textarea id="contentId" ng-model="child.content"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{{'created' | translate}}:</td>
+                <td class="value">{{child.created}}</td>
+            </tr>
+            <tr>
+                <td class="label">{{'createdBy' | translate}}:</td>
+                <td class="value">{{child.createdBy}}</td>
+            </tr>
+            <tr>
+                <td class="label">{{'modified' | translate}}:</td>
+                <td class="value">{{child.modified}}</td>
+            </tr>
+            <tr>
+                <td class="label">{{'modifiedBy' | translate}}:</td>
+                <td class="value">{{child.modifiedBy}}</td>
+            </tr>
+        </table>
+    </form>
+</div>

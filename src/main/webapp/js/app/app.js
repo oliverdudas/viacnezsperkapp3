@@ -1,5 +1,8 @@
 angular.module('viacnezsperk', [
     'ui.router',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls',
+    'angularFileUpload',
     'ngAnimate',
     'pascalprecht.translate',
     'angular-google-gapi',
@@ -24,7 +27,7 @@ angular.module('viacnezsperk', [
 
         GApi.load('viacnezsperkAPI', 'v1', BASE);
         GAuth.setClient(CLIENT);
-        GAuth.setScope('https://www.googleapis.com/auth/userinfo.email');
+        GAuth.setScope('email https://picasaweb.google.com/data/');
 
         //GAuth.checkAuth().then(
         //    function () {

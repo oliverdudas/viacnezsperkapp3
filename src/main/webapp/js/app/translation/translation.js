@@ -28,6 +28,7 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         delete_question: 'Naozaj chcete zmazať tento záznam?',
         delete_image_question: 'Naozaj chcete zmazať fotografiu?',
         select_file: '[Vybrať foto]',
+        upload_photo: 'Nahrať fotky',
         upload_to_picasa: '[Nahrať do Picasy]',
         error_username_already_exists: 'Toto prihlasovacie meno je už obsadené',
         required: 'Povinné',
@@ -42,7 +43,16 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         residence: 'Bydlisko',
         socialInfo: 'Sociálna situácia',
         gallery: 'Galéria',
-        viacnezsperk: 'Viac než šperk © 2013'
+        viacnezsperk: 'Viac než šperk © 2013',
+        queue_progress: 'Celkový stav nahrávania',
+        upload_all: 'Nahrať všetko',
+        cancel_all: 'Zručiť všetko',
+        remove_all: 'Zmazať všetko',
+        name: 'Názov',
+        size: 'Veľkosť',
+        progress: 'Stav nahrávania',
+        status: 'Status',
+        actions: 'Akcie'
     });
 
     $translateProvider.translations('en', {
