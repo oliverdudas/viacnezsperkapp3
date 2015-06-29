@@ -50,14 +50,14 @@
                     <hr/>
                     <h2>{{'gallery' | translate}}</h2>
                             <span ng-repeat="item in user.galleryItems track by $index" class="homeGalleryItemWrapper">
-                                <a href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">
+                                <a target="_blank" href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">
                                     <img src="{{item.thumbUrl}}" alt="...">
                                 </a>
                             </span>
                 </div>
                 <hr/>
                 <h2>{{'socialInfo' | translate}}</h2>
-                {{user.content.value}}
+                <div ng-bind-html="getHtmlContent()"></div>
             </font>
         </p>
     </div>

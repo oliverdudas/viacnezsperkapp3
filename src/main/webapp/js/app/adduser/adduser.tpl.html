@@ -2,7 +2,7 @@
 
     <div>
         <tabset vertical="true" type="pills">
-            <tab heading="{{'child' | translate}}">
+            <tab heading="{{'child' | translate}}" class="tab">
                 <div class="formWrapper">
 
                     <form action="" name="childForm" id="childFormId" enctype="multipart/form-data">
@@ -17,8 +17,8 @@
                             <tr>
                                 <td class="label" title="{{'required' | translate}}">{{'login_password' | translate}}:</td>
                                 <td class="value">
-                                    <input type="text" id="passwordId" ng-model="child.password"/>
-                                    <button type="button" class="btn btn-info">{{'generate' | translate}}</button>
+                                    <input type="text" id="passwordId" ng-model="child.password" class="number"/>
+                                    <button type="button" ng-click="generatePassword()" class="btn btn-info">{{'generate' | translate}}</button>
                                 </td>
                             </tr>
                             <tr>
@@ -30,7 +30,7 @@
                             <tr>
                                 <td class="label">{{'bornYear' | translate}}:</td>
                                 <td class="value">
-                                    <input ng-model="child.bornYear" type="text"/>
+                                    <input ng-model="child.bornYear" type="text" class="number"/>
                                 </td>
                             </tr>
                             <tr>
@@ -42,48 +42,113 @@
                             <tr>
                                 <td class="label" style="vertical-align: top;">{{'main_content' | translate}}:</td>
                                 <td class="value">
-                                    <textarea id="contentId" ng-model="child.content"></textarea>
+                                    <textarea id="contentId" style="width: 700px; height: 130px;" ng-model="child.content.value"></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label">{{'created' | translate}}:</td>
-                                <td class="value">{{child.created}}</td>
+                                <td class="value">{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</td>
                             </tr>
-                            <tr>
-                                <td class="label">{{'createdBy' | translate}}:</td>
-                                <td class="value">{{child.createdBy}}</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td class="label">{{'createdBy' | translate}}:</td>-->
+                                <!--<td class="value">{{child.createdBy}}</td>-->
+                            <!--</tr>-->
                             <tr>
                                 <td class="label">{{'modified' | translate}}:</td>
-                                <td class="value">{{child.modified}}</td>
+                                <td class="value">{{ child.modified | date : 'dd.MM.yyyy HH:mm'}}</td>
                             </tr>
-                            <tr>
-                                <td class="label">{{'modifiedBy' | translate}}:</td>
-                                <td class="value">{{child.modifiedBy}}</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td class="label">{{'modifiedBy' | translate}}:</td>-->
+                                <!--<td class="value">{{child.modifiedBy}}</td>-->
+                            <!--</tr>-->
                         </table>
                     </form>
                 </div>
             </tab>
-            <tab heading="{{'main_url' | translate}}">
-                <tr>
-                    <td class="label">{{'main_url' | translate}}:</td>
-                    <td class="value">
-                        <input type="text" id="mainUrlId" ng-model="child.mainURL"/>
-                                    <span id="container">
-                                        <a id="pickfiles" href="javascript:;">{{'select_file' | translate}}</a>
-                                        <span id="filelist"></span>
-                                        <a id="uploadfiles" style="display: none;" href="javascript:;">{{'upload_to_picasa' |
-                                            translate}}</a>
-                                    </span>
-                    </td>
-                </tr>
-            </tab>
-            <tab heading="{{'upload_photo' | translate}}">
+            <tab heading="{{'title_photo' | translate}}" class="tab">
+                <!--<tr>-->
+                    <!--<td class="label">{{'main_url' | translate}}:</td>-->
+                    <!--<td class="value">-->
+                        <!--<input type="text" id="mainUrlId" ng-model="child.mainURL"/>-->
+                                    <!--<span id="container">-->
+                                        <!--<a id="pickfiles" href="javascript:;">{{'select_file' | translate}}</a>-->
+                                        <!--<span id="filelist"></span>-->
+                                        <!--<a id="uploadfiles" style="display: none;" href="javascript:;">{{'upload_to_picasa' |-->
+                                            <!--translate}}</a>-->
+                                    <!--</span>-->
+                    <!--</td>-->
+                <!--</tr>-->
                 <table class="table">
                     <thead>
                     <tr>
-                        <th width="50%">{{'name' | translate}}</th>
+                        <th width="50%">{{'title' | translate}}</th>
+                        <th ng-show="titleUploader.isHTML5">{{'size' | translate}}</th>
+                        <th ng-show="titleUploader.isHTML5">{{'progress' | translate}}</th>
+                        <th>{{'status' | translate}}</th>
+                        <th>{{'actions' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in titleUploader.queue">
+                        <td>
+                            <strong>{{ item.file.name }}</strong>
+                            <!-- Image preview -->
+                            <!--auto height-->
+                            <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                            <!--auto width-->
+                            <!--<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>-->
+                            <!--fixed width and height -->
+                            <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                        </td>
+                        <td ng-show="titleUploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                        <td ng-show="titleUploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                        <td nowrap>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> {{'upload' | translate}}
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                <span class="glyphicon glyphicon-ban-circle"></span> {{'cancel' | translate}}
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> {{'remove' | translate}}
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+<!--                    <span id="titleItem">
+                        <span ng-show="child.mainURL" class="itemWrapper">
+                            <img ng-src="{{child.mainURL}}" alt="...">
+                        </span>
+                    </span>-->
+                    <span>
+                        <span ng-repeat="item in mainURLs()" class="itemWrapper">
+                            <img src="{{item}}" alt="...">
+                        </span>
+                    </span>
+                </div>
+                <div>
+                    <div style="position: relative; margin: 10px 0; ">
+                        <button type="button" class="btn btn-info" ng-click="put()" name="childFormSubmit">{{'select_file' | translate}}</button>
+                        <input type="file" nv-file-select="" uploader="titleUploader" multiple  style="position: absolute; padding: 7px; z-index: 1001; top: 0; opacity: 0.01;"/>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="{{'gallery' | translate}}" class="tab">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="50%">{{'title' | translate}}</th>
                         <th ng-show="uploader.isHTML5">{{'size' | translate}}</th>
                         <th ng-show="uploader.isHTML5">{{'progress' | translate}}</th>
                         <th>{{'status' | translate}}</th>
@@ -167,10 +232,10 @@
                             <td colspan="2">
                                     <span id="galleryItems">
                                         <span ng-repeat="item in child.galleryItems" class="itemWrapper">
-                                            <span class="deleteItem">
-                                                <a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |
-                                                    translate}}</a>
-                                            </span>
+                                            <!--<span class="deleteItem">-->
+                                                <!--<a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |-->
+                                                    <!--translate}}</a>-->
+                                            <!--</span>-->
                                             <img src="{{item.thumbUrl}}" alt="...">
                                         </span>
                                     </span>
@@ -184,7 +249,7 @@
         <div class="submitArea">
             <button type="button" class="btn btn-info" ng-click="put()" name="childFormSubmit">{{'save' | translate}}</button>
             <button type="button" ng-click="toList()" class="btn btn-info">{{'cancel' | translate}}</button>
-            <button ng-show="child.key != null" type="button" class="btn btn-info">{{'delete' | translate}}</button>
+            <!--<button ng-show="child.identifier != null" type="button" class="btn btn-info">{{'delete' | translate}}</button>-->
         </div>
 
     </div>

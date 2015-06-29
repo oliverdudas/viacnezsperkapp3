@@ -15,7 +15,7 @@ public class UserModel {
 
     public static final String KIND = "User";
 
-    private String key;
+    private String identifier;
 
     private String username;
     private String password;
@@ -54,11 +54,13 @@ public class UserModel {
         return entity;
     }
 
-    public static UserModel createModel(Entity entity) {
+    public static UserModel createModel(Entity entity, boolean includePassword) {
         UserModel userModel = new UserModel();
-        userModel.setKey(KeyFactory.keyToString(entity.getKey()));
+        userModel.setIdentifier(KeyFactory.keyToString(entity.getKey()));
         userModel.setUsername(entity.getProperty("username") != null ? (String) entity.getProperty("username") : null);
-        userModel.setPassword(entity.getProperty("password") != null ? (String) entity.getProperty("password") : null);
+        if (includePassword) {
+            userModel.setPassword(entity.getProperty("password") != null ? (String) entity.getProperty("password") : null);
+        }
         userModel.setFirstname(entity.getProperty("firstname") != null ? (String) entity.getProperty("firstname") : null);
         userModel.setLastname(entity.getProperty("lastname") != null ? (String) entity.getProperty("lastname") : null);
         userModel.setAge(entity.getProperty("age") != null ? (Long) entity.getProperty("age") : null);
@@ -74,15 +76,19 @@ public class UserModel {
         return userModel;
     }
 
+    public static UserModel createModel(Entity entity) {
+        return createModel(entity, false);
+    }
+
     public UserModel() {
     }
 
-    public String getKey() {
-        return key;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setIdentifier(String key) {
+        this.identifier = key;
     }
 
     public String getUsername() {

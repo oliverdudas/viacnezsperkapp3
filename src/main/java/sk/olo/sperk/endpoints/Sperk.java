@@ -2,12 +2,7 @@ package sk.olo.sperk.endpoints;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.users.User;
-import sk.olo.sperk.model.GalleryItemModel;
-import sk.olo.sperk.model.KeyModel;
-import sk.olo.sperk.model.RoleModel;
-import sk.olo.sperk.model.UserModel;
+import sk.olo.sperk.model.*;
 import sk.olo.sperk.service.UserService;
 import sk.olo.sperk.service.UserServiceImpl;
 import sk.olo.sperk.util.Constants;
@@ -47,13 +42,17 @@ public class Sperk {
         UserService service = new UserServiceImpl();
         UserModel userByUsername = service.getUserByUsername(username);
         if (userByUsername != null && password.equals(userByUsername.getPassword())) {
-            return getFullUser(userByUsername.getKey());
-        } else if ("test".equals(username) && "test".equals(password)) {
+            return getFullUser(userByUsername.getIdentifier());
+        } else if (userByUsername == null && "test".equals(username) && "test".equals(password)) {
             KeyModel admin = new KeyModel(service.createTestUser());
-            return getFullUser(admin.getKey());
+            return getFullUser(admin.getIdentifier());
         } else {
             throw new RuntimeException("Invalid username, or password!");
         }
+    }
+
+    public KeyModel getDummyRequest() {
+        return new KeyModel("Dummy request!");
     }
 
     public KeyModel putUser(UserModel userModel) {
@@ -61,44 +60,45 @@ public class Sperk {
         return new KeyModel(service.putUser(userModel));
     }
 
-    public KeyModel putGalleryItem(GalleryItemModel galleryItemModel) {
-        UserService service = new UserServiceImpl();
-        return new KeyModel(service.putGalleryItem(galleryItemModel));
-    }
-
-    public KeyModel putRole(RoleModel roleModel) {
-        UserService service = new UserServiceImpl();
-        return new KeyModel(service.putRole(roleModel));
-    }
-
-    public UserModel getUser(@Named("key") String key) {
-        UserService service = new UserServiceImpl();
-        return service.getUser(key);
-    }
-
     @ApiMethod(name="sperk.fulluser", path = "usermodel/fulluser")
-    public UserModel getFullUser(@Named("key") String key) {
+    public UserModel getFullUser(@Named("identifier") String identifier) {
         UserService service = new UserServiceImpl();
-        return service.getFullUser(key);
+        return service.getFullUser(identifier);
     }
 
-    public List<UserModel> getUsers(User user) {
-        if (user != null) {
-            UserService service = new UserServiceImpl();
-            return service.getUsers();
-        } else {
-            throw new RuntimeException("USER_ACCESS_DENIED");
-        }
+    public List<UserModel> getUsers() {
+        UserService service = new UserServiceImpl();
+        return service.getUsers();
     }
 
-    public KeyModel storePerson() {
-        UserService service = new UserServiceImpl();
-        return new KeyModel(service.storePerson());
-    }
+//    public KeyModel storePerson() {
+//        UserService service = new UserServiceImpl();
+//        return new KeyModel(service.storePerson());
+//    }
+//
+//    public List<Entity> loadPerson(@Named("identifier") String identifier) {
+//        UserService service = new UserServiceImpl();
+//        return service.loadPersonByAncestor(identifier);
+//    }
 
-    public List<Entity> loadPerson(@Named("key") String key) {
-        UserService service = new UserServiceImpl();
-        return service.loadPersonByAncestor(key);
-    }
+//    public KeyModel putGalleryItem(GalleryItemModel galleryItemModel) {
+//        UserService service = new UserServiceImpl();
+//        return new KeyModel(service.putGalleryItem(galleryItemModel));
+//    }
+
+//    public KeyModel putRole(RoleModel roleModel) {
+//        UserService service = new UserServiceImpl();
+//        return new KeyModel(service.putRole(roleModel));
+//    }
+//
+//    public UserModel getUser(@Named("identifier") String identifier) {
+//        UserService service = new UserServiceImpl();
+//        return service.getUser(identifier);
+//    }
+//
+//    public UserListHolder getUserList(@Named("cursor") String cursor) {
+//        UserService service = new UserServiceImpl();
+//        return service.getUserList(cursor);
+//    }
 
 }

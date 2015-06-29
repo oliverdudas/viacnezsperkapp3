@@ -1,9 +1,5 @@
 package sk.olo.sperk.persinstence;
 
-import com.google.appengine.api.datastore.Entity;
-import sk.olo.sperk.model.GalleryItemModel;
-import sk.olo.sperk.model.KeyModel;
-import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
 import java.util.List;
@@ -16,19 +12,21 @@ public interface ToolsPersistence {
 
     String putUser(UserModel userModel);
 
-    UserModel getUser(String key);
+//    UserModel getUser(String key);
 
     UserModel getFullUser(String key);
 
     List<UserModel> getUsers();
 
-    String putGalleryItem(GalleryItemModel galleryItemModel);
+//    UserListHolder getUserList(String cursor);
 
-    String putRole(RoleModel roleModel);
+//    String putGalleryItem(GalleryItemModel galleryItemModel);
 
-    String storePersonWithImages();
+//    String putRole(RoleModel roleModel);
 
-    List<Entity> loadPersonGroupByAncestor(String id);
+//    String storePersonWithImages();
 
-    String putFullUser(UserModel userModel);
+//    List<Entity> loadPersonGroupByAncestor(String id);
+
+//    String putFullUser(UserModel userModel);
 }

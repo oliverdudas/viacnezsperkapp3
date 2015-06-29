@@ -24,12 +24,18 @@ angular.module('home', [])
                     controller: 'ListController',
                     templateUrl: 'js/app/home/list.tpl.html',
                     resolve: {
-                        users: function(GApi) {
-                            return GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
-                                return resp.items;
-                            }, function () {
-                                console.log("error :(");
-                            });
+                        users: function (GApi, listHolder) {
+                            var list = listHolder.getList();
+                            if (list === null) {
+                                return GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
+                                    listHolder.setList(resp.items);
+                                    return listHolder.getList();
+                                }, function () {
+                                    console.log("error :(");
+                                });
+                            } else {
+                                return list;
+                            }
                         }
                     }
                 }
@@ -38,9 +44,84 @@ angular.module('home', [])
 
     }])
 
-    .controller('ListController', ['$scope', '$state', 'GApi', 'users', function ListCtrl($scope, $state, GApi, users) {
+    .factory('listHolder', [function () {
+        var _list = null;
+        return {
 
-        $scope.users = users;
+            setList: function (list) {
+                _list = list;
+            },
+
+            getList: function () {
+                return _list;
+            },
+
+            clearList: function () {
+                _list = null;
+            },
+
+            unshiftItem: function(item) {
+                if (_list === null) {
+                    _list = [];
+                }
+                _list.unshift(item);
+            },
+
+            deleteItem: function(key) {
+                if (_list !== null) {
+                    var listIndex;
+                    var item;
+                    for (listIndex in _list) {
+                        item = _list[listIndex];
+                        if (key === item.identifier) {
+                            return _list.splice(listIndex, 1);
+                        }
+                    }
+                }
+            }
+        }
+    }])
+
+    .service('listService', [function () {
+        //this.filterUsers = function(users, q) {
+        //    var counter = 0;
+        //    return users.filter(function (user, index) {
+        //        if (counter > 9) return false;
+        //        counter++;
+        //        return user.username.indexOf(q) === 0;
+        //    });
+        //};
+        this.filterUsers = function (users, q) {
+            var key;
+            var user;
+            var result = [];
+            var counter = 0;
+            for (key in users) {
+                if (counter > 9) break;
+
+                user = users[key];
+                if (user.username.indexOf(q) === 0) {
+                    result.push(user);
+                    counter++;
+                }
+            }
+            return result;
+        };
+    }])
+
+    .controller('ListController', ['$scope', '$state', 'GApi', 'listService', 'listHolder', function ListCtrl($scope, $state, GApi, listService, listHolder) {
+
+        var getUsers = function () {
+            return listHolder.getList();
+        };
+
+        $scope.users = getUsers().slice(0, 10);
+
+        $scope.$watch('typeahead', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.users = listService.filterUsers(getUsers(), newVal);
+            }
+        });
 
         $scope.addUser = function () {
             $state.go('home.adduser');
@@ -50,16 +131,21 @@ angular.module('home', [])
             $state.go('home.adduser', {key: key});
         };
 
-        $scope.$on('$viewContentLoaded', function() {
-            Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
+        $scope.$on('$viewContentLoaded', function () {
+            Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
         });
 
-        $scope.test = function() {
-            GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
+        $scope.test = function () {
+            GApi.execute('viacnezsperkAPI', 'sperk.getDummyRequest').then(function (resp) {
                 console.log('returned');
             }, function () {
                 console.log("error :(");
             });
+        };
+
+        $scope.toPreview = function(key, $event) {
+            $event.stopPropagation();
+            $state.go('home.childoverview', {key: key})
         };
 
         //$scope.$on('$routeChangeSuccess', function () {

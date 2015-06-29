@@ -61,11 +61,11 @@ public class PicasaManagerImpl implements PicasaManager {
         PicasawebService myService = createPicasawebService(accessToken);
         UserFeed userAlbumFeed = getUserAlbumFeed(myService);
         List<GphotoEntry> entries = userAlbumFeed.getEntries();
-        for (GphotoEntry entry : entries) {
+        for (GphotoEntry entry : entries) { // TODO: handle case where uploader is not album owner
             String titleText = entry.getTitle().getPlainText();
-            if (titleText.startsWith(VIACNEZSPERK) && entry.hasExtension(GphotoPhotosLeft.class)) {
-                Integer photosLeftCount = entry.getExtension(GphotoPhotosLeft.class).getValue();
-                if (photosLeftCount > 0) {
+            if (titleText.startsWith(VIACNEZSPERK) && entry.hasExtension(GphotoPhotosUsed.class)) {
+                Integer photosUsedCount = entry.getExtension(GphotoPhotosUsed.class).getValue();
+                if (photosUsedCount < 2000) {
                     return entry.getGphotoId();
                 }
             }

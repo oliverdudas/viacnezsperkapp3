@@ -23,6 +23,16 @@
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>loginredirect</servlet-name>
+        <servlet-class>sk.olo.sperk.servlet.RedirectServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>loginredirect</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

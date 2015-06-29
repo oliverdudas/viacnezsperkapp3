@@ -1,9 +1,5 @@
 package sk.olo.sperk.service;
 
-import com.google.appengine.api.datastore.Entity;
-import sk.olo.sperk.model.GalleryItemModel;
-import sk.olo.sperk.model.KeyModel;
-import sk.olo.sperk.model.RoleModel;
 import sk.olo.sperk.model.UserModel;
 
 import java.util.List;
@@ -16,21 +12,23 @@ public interface UserService {
 
     String putUser(UserModel userModel);
 
-    UserModel getUser(String key);
+//    UserModel getUser(String key);
+
+//    UserListHolder getUserList(String cursor);
 
     UserModel getFullUser(String key);
 
     List<UserModel> getUsers();
 
-    String putGalleryItem(GalleryItemModel galleryItemModel);
+//    String putGalleryItem(GalleryItemModel galleryItemModel);
 
-    String putRole(RoleModel roleModel);
+//    String putRole(RoleModel roleModel);
 
-    String storePerson();
+//    String storePerson();
 
-    List<Entity> loadPersonByAncestor(String id);
+//    List<Entity> loadPersonByAncestor(String id);
 
     String createTestUser();
 
-    String putFullUser(UserModel userModel);
+//    String putFullUser(UserModel userModel);
 }

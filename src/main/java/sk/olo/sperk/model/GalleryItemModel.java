@@ -9,9 +9,13 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class GalleryItemModel {
 
     public static final String KIND = "GalleryItem";
+    public static final String ACTION_DELETE = "delete";
+    public static final String ACTION_PUT = "put";
 
     private String parentKey;
-    private String key;
+    private String identifier;
+
+    private String crudAction;
 
     private String gphotoId;
     private Long index;
@@ -32,7 +36,7 @@ public class GalleryItemModel {
 
     public static GalleryItemModel createModel(Entity entity) {
         GalleryItemModel itemModel = new GalleryItemModel();
-        itemModel.setKey(KeyFactory.keyToString(entity.getKey()));
+        itemModel.setIdentifier(KeyFactory.keyToString(entity.getKey()));
         itemModel.setParentKey(KeyFactory.keyToString(entity.getKey().getParent()));
         itemModel.setGphotoId(entity.getProperty("gphotoId") != null ? (String) entity.getProperty("gphotoId") : null);
         itemModel.setIndex(entity.getProperty("index") != null ? (Long) entity.getProperty("index") : null);
@@ -49,12 +53,12 @@ public class GalleryItemModel {
         this.parentKey = parentKey;
     }
 
-    public String getKey() {
-        return key;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setIdentifier(String key) {
+        this.identifier = key;
     }
 
     public String getGphotoId() {
@@ -87,5 +91,13 @@ public class GalleryItemModel {
 
     public void setThumbUrl(String thumbUrl) {
         this.thumbUrl = thumbUrl;
+    }
+
+    public String getCrudAction() {
+        return crudAction;
+    }
+
+    public void setCrudAction(String crudAction) {
+        this.crudAction = crudAction;
     }
 }

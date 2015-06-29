@@ -9,8 +9,8 @@
     <artifactId>viacnezsperk</artifactId>
 
     <properties>
-        <app.id>viacnezsperkapp3</app.id>
-        <app.version>4</app.version>
+        <app.id>viacnezsperkapp1</app.id>
+        <app.version>124</app.version>
         <appengine.version>1.9.22</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
@@ -59,16 +59,6 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client</artifactId>
-            <version>1.18.0-rc</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.http-client</groupId>
-            <artifactId>google-http-client-jackson2</artifactId>
-            <version>1.18.0-rc</version>
         </dependency>
 
         <!-- Test Dependencies -->

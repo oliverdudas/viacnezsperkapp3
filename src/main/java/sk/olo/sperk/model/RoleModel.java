@@ -14,7 +14,7 @@ public class RoleModel {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     private String parentKey;
-    private String key;
+    private String identifier;
 
     private String name;
 
@@ -32,18 +32,18 @@ public class RoleModel {
 
     public static RoleModel createModel(Entity entity) {
         RoleModel roleModel = new RoleModel();
-        roleModel.setKey(KeyFactory.keyToString(entity.getKey()));
+        roleModel.setIdentifier(KeyFactory.keyToString(entity.getKey()));
         roleModel.setParentKey(KeyFactory.keyToString(entity.getKey().getParent()));
         roleModel.setName(entity.getProperty("name") != null ? (String) entity.getProperty("name") : null);
         return roleModel;
     }
 
-    public String getKey() {
-        return key;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setIdentifier(String key) {
+        this.identifier = key;
     }
 
     public void setParentKey(String parentKey) {

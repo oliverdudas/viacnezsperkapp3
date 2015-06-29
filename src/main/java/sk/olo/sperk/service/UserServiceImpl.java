@@ -2,10 +2,7 @@ package sk.olo.sperk.service;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Text;
-import sk.olo.sperk.model.GalleryItemModel;
-import sk.olo.sperk.model.KeyModel;
-import sk.olo.sperk.model.RoleModel;
-import sk.olo.sperk.model.UserModel;
+import sk.olo.sperk.model.*;
 import sk.olo.sperk.persinstence.ToolsDatastore;
 import sk.olo.sperk.persinstence.ToolsPersistence;
 
@@ -31,12 +28,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel getUser(String key) {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.getUser(key);
-    }
-
-    @Override
     public UserModel getFullUser(String key) {
         ToolsPersistence persistence = new ToolsDatastore();
         return persistence.getFullUser(key);
@@ -48,35 +39,29 @@ public class UserServiceImpl implements UserService {
         return persistence.getUsers();
     }
 
-    @Override
-    public String putGalleryItem(GalleryItemModel galleryItemModel) {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.putGalleryItem(galleryItemModel);
-    }
-
-    @Override
-    public String putRole(RoleModel roleModel) {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.putRole(roleModel);
-    }
-
-    @Override
-    public String storePerson() {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.storePersonWithImages();
-    }
-
-    @Override
-    public List<Entity> loadPersonByAncestor(String key) {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.loadPersonGroupByAncestor(key);
+    public void createTestUsers() {
+        String[] usernames = new String[]{
+                "test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10", "test11", "test12", "test13", "test14", "test15",
+                "te1", "te2", "te3", "te4", "te5", "te6", "te7", "te8", "te9", "te10", "te11", "te12", "te13", "te14", "te15",
+                "ter1", "ter2", "ter3", "ter4", "ter5", "ter6", "ter7", "ter8", "ter9", "ter10", "ter11", "ter12", "ter13", "ter14", "ter15"};
+        for (String username : usernames) {
+            UserModel testUser = createTestUser(username, username);
+            putUser(testUser);
+        }
     }
 
     @Override
     public String createTestUser() {
+        createTestUsers();
+
+        UserModel testUser = createTestUser("test", "test");
+        return putUser(testUser);
+    }
+
+    private UserModel createTestUser(String username, String password) {
         UserModel testUser = new UserModel();
-        testUser.setUsername("test");
-        testUser.setPassword("test");
+        testUser.setUsername(username);
+        testUser.setPassword(password);
         testUser.setContent(new Text("BLaaaaaaaaaaaaaaaaaaaaa laaaaaaaaaaa laaaaaaaaaaaa"));
         testUser.setAge(12L);
         testUser.setBornYear(2003L);
@@ -97,6 +82,7 @@ public class UserServiceImpl implements UserService {
         item1.setThumbUrl("https://lh3.googleusercontent.com/-vf-SoeYz_e0/Ut5B9oDy_pI/AAAAAAAAGe8/SqoUY0REeho/s144/amina.JPG");
         item1.setGphotoId("aaaaaaaaaaaaa");
         item1.setIndex(5L);
+        item1.setCrudAction(GalleryItemModel.ACTION_PUT);
         galleryItems.add(item1);
 
         GalleryItemModel item2 = new GalleryItemModel();
@@ -104,16 +90,52 @@ public class UserServiceImpl implements UserService {
         item2.setThumbUrl("https://lh5.googleusercontent.com/-2XBq5Kun_gg/UzUtW46AucI/AAAAAAAAHrs/eLSDpdVp8pM/s144/our%252520kids%252520022.JPG");
         item2.setGphotoId("aaaaaaaaaaaaa");
         item2.setIndex(5L);
+        item2.setCrudAction(GalleryItemModel.ACTION_PUT);
         galleryItems.add(item2);
 
         testUser.setGalleryItems(galleryItems);
-
-        return putFullUser(testUser);
+        return testUser;
     }
 
-    @Override
-    public String putFullUser(UserModel userModel) {
-        ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.putFullUser(userModel);
-    }
+//    @Override
+//    public UserModel getUser(String key) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.getUser(key);
+//    }
+
+//    @Override
+//    public UserListHolder getUserList(String cursor) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.getUserList(cursor);
+//    }
+
+//    @Override
+//    public String putFullUser(UserModel userModel) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.putFullUser(userModel);
+//    }
+
+//    @Override
+//    public String putGalleryItem(GalleryItemModel galleryItemModel) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.putGalleryItem(galleryItemModel);
+//    }
+
+//    @Override
+//    public String putRole(RoleModel roleModel) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.putRole(roleModel);
+//    }
+//
+//    @Override
+//    public String storePerson() {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.storePersonWithImages();
+//    }
+//
+//    @Override
+//    public List<Entity> loadPersonByAncestor(String key) {
+//        ToolsPersistence persistence = new ToolsDatastore();
+//        return persistence.loadPersonGroupByAncestor(key);
+//    }
 }

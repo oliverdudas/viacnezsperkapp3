@@ -10,7 +10,7 @@ angular.module('adduser', [])
                     resolve: {
                         child: function(GApi, $stateParams) {
                             if ($stateParams.key) {
-                                return GApi.execute('viacnezsperkAPI', 'sperk.fulluser', {key: $stateParams.key}).then(function (resp) {
+                                return GApi.execute('viacnezsperkAPI', 'sperk.fulluser', {identifier: $stateParams.key}).then(function (resp) {
                                     return resp;
                                 }, function () {
                                     console.log("error :(");
@@ -26,34 +26,91 @@ angular.module('adduser', [])
 
     }])
 
-    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'FileUploader', function AddUserCtrl($scope, $state, GApi, GAuth, child, FileUploader) {
-        $scope.uploader = new FileUploader({
-            //url: 'http://localhost:8080/_ah/upload/ahB2aWFjbmV6c3BlcmthcHAzciILEhVfX0Jsb2JVcGxvYWRTZXNzaW9uX18YgICAgICAoAsM',
-            url: '/upload',
-            alias: 'myFile',
-            formData: [{
-                accessToken: GAuth.getToken().$$state.value.access_token
-            }],
-            method: 'POST',
-                onAfterAddingFile: function(item) {
-                console.log(111111111111);
-            },
-            onSuccessItem: function(item, response, status, headers) {
-                console.log('done item: ' + item);
-                console.log('gphotoId: ' + response.gphotoId);
-                console.log('thumbUrl: ' + response.thumbUrl);
-                console.log('imageUrl: ' + response.imageUrl);
+    .service('addUserService', ['listHolder', 'FileUploader', 'GAuth', function(listHolder, FileUploader, GAuth) {
+        this.prepareChild = function(child, newKey) {
+            var isNewChild = angular.isUndefined(child.identifier);
+            var actualDate = new Date();
+            if (isNewChild) {
+                child.created = actualDate;
+                child.identifier = newKey;
+            } else {
+                listHolder.deleteItem(child.identifier); // delete old child from listholder
             }
+
+            listHolder.unshiftItem(child); // add updated child to listholder
+            child.modified = actualDate;
+        };
+
+        this.createUploader = function(successCallbackFn) {
+            return new FileUploader({
+                //url: 'http://localhost:8080/_ah/upload/ahB2aWFjbmV6c3BlcmthcHAzciILEhVfX0Jsb2JVcGxvYWRTZXNzaW9uX18YgICAgICAoAsM',
+                url: '/upload',
+                alias: 'myFile',
+                formData: [{
+                    accessToken: GAuth.getToken().$$state.value.access_token
+                }],
+                method: 'POST',
+                onSuccessItem: function(item, response, status, headers) {
+                    console.log('done item: ' + item);
+                    console.log('gphotoId: ' + response.gphotoId);
+                    console.log('thumbUrl: ' + response.thumbUrl);
+                    console.log('imageUrl: ' + response.imageUrl);
+                    successCallbackFn.apply(null, [response.gphotoId, response.thumbUrl, response.imageUrl]);
+                }
+            });
+        };
+
+        /**
+         * Generates random number between 1000 inclusive and 9999 exclusive
+         * @returns {number}
+         */
+        this.generateRandomPassword = function() {
+            return Math.floor(Math.random() * (9999 - 1000) + 1000);
+        };
+    }])
+
+    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService) {
+        $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl) {
+            console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl);
+            if (angular.isUndefined($scope.child.galleryItems)) {
+                $scope.child.galleryItems = [];
+            }
+            $scope.child.galleryItems.push({
+                gphotoId: gphotoId,
+                imageUrl: imageUrl,
+                thumbUrl: thumbUrl,
+                index: 1,
+                crudAction: 'put'
+            });
         });
+
+        $scope.titleUploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl) {
+            console.log('Title uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl);
+            $scope.child.mainURL = imageUrl;
+        });
+
         $scope.child = child;
-        $scope.key = '';
+
+        $scope.mainURLs = function() {
+            return [$scope.child.mainURL];
+        };
+
+        $scope.generatePassword = function() {
+            $scope.child.password = addUserService.generateRandomPassword();
+        };
 
         $scope.put = function () {
             GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
-                $scope.key = resp.key;
+
+                //------------------------------------------------------------------------------------------//
+                // TODO: the putUser should return the child, that we can update listHolder with fresh data //
+                //------------------------------------------------------------------------------------------//
+
+                addUserService.prepareChild($scope.child, resp.identifier);
+
                 $state.go('home.list');
-            }, function () {
-                console.log("error :(");
+            }, function (resp) {
+                alert(resp.error.message);
             });
         };
 

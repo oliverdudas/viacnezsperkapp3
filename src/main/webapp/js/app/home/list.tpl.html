@@ -38,6 +38,27 @@
                 <!--Username: {{user.username}} Age: {{user.age}}-->
             <!--</div>-->
 
+            <div>
+                <input type="text" ng-model="typeahead" style="margin-bottom: 20px;">
+            </div>
+
+            <!--<div ng-animate="'animate'" ng-repeat="child in users track by $index" ng-click="edit(child.key)" style="padding: 10px;">-->
+                <!--<span>{{child.username}}</span>-->
+                <!--<span>{{child.firstname}}</span>&ndash;&gt;-->
+                <!--<span>{{child.modified}}</span>&ndash;&gt;-->
+                <!--<span>{{child.created}}</span>&ndash;&gt;-->
+                <!--<span>-->
+                    <!--<a target="_blank" class="insightClass" href="#">{{'insight' | translate}}</a>-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<ul class="nav nav-pills nav-stacked userlist">-->
+                <!--<li ng-repeat="child in users track by $index" ng-click="edit(child.key)" >-->
+                    <!--<a href>-->
+                        <!--<span>{{child.username}}</span>-->
+                        <!--<span>{{child.firstname}}</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
             <div class="tableContent">
                 <table class="childrentable" cellpadding="0" cellspacing="0">
                     <thead>
@@ -60,7 +81,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="child in users track by $index" ng-click="edit(child.key)">
+                        <tr ng-repeat="child in users track by $index" ng-click="edit(child.identifier)" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
                             <td class="firsttd">
                                 <div>{{child.username}}</div>
                             </td>
@@ -68,14 +89,14 @@
                                 <div>{{child.firstname}}</div>
                             </td>
                             <td class="td">
-                                <div>{{child.modified}}</div>
+                                <div>{{ child.modified | date : 'dd.MM.yyyy HH:mm'}}</div>
                             </td>
                             <td class="td">
-                                <div>{{child.created}}</div>
+                                <div>{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</div>
                             </td>
                             <td class="lasttd">
                                 <div>
-                                    <a target="_blank" class="insightClass" href="#">{{'insight' | translate}}</a>
+                                    <a class="insightClass" href ng-click="toPreview(child.identifier, $event)">{{'insight' | translate}}</a>
                                 </div>
                             </td>
                         </tr>

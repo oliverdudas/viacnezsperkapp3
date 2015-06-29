@@ -11,8 +11,14 @@
 
         <nav>
             <ul class="nav">
-                <li ng-show="!isLoginState()">
-                    <a href ng-click="logout()">{{'logout' | translate}}</a>
+                <li ng-show="!isLogin() && isOverviewState()">
+                    <a style="background-color: transparent;" href ng-click="logout()">{{'logout' | translate}}</a>
+                </li>
+                <li ng-show="isLogin() && !isLoginState() && !isOverviewState()">
+                    <a style="background-color: transparent;" href ng-click="logout()">{{'logout' | translate}}</a>
+                </li>
+                <li ng-show="isLogin() && isOverviewState()">
+                    <a style="background-color: transparent;" href ng-click="closeOverview()">{{'close_insight' | translate}}</a>
                 </li>
                 <!--<li>-->
                    <!--<a href> Email: {{getEmail()}}</a>-->

@@ -5,20 +5,20 @@ package sk.olo.sperk.model;
  */
 public class KeyModel {
 
-    private String key;
+    private String identifier;
 
     public KeyModel() {
     }
 
     public KeyModel(String key) {
-        this.key = key;
+        this.identifier = key;
     }
 
-    public String getKey() {
-        return key;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setIdentifier(String key) {
+        this.identifier = key;
     }
 }
