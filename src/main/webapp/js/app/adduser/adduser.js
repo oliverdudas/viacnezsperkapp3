@@ -26,7 +26,7 @@ angular.module('adduser', [])
 
     }])
 
-    .service('addUserService', ['listHolder', 'FileUploader', 'GAuth', function(listHolder, FileUploader, GAuth) {
+    .service('addUserService', ['listHolder', 'FileUploader', 'GAuth', 'modalService', '$filter', function(listHolder, FileUploader, GAuth, modalService, $filter) {
         this.prepareChild = function(child, newKey) {
             var isNewChild = angular.isUndefined(child.identifier);
             var actualDate = new Date();
@@ -42,6 +42,8 @@ angular.module('adduser', [])
         };
 
         this.createUploader = function(successCallbackFn) {
+            var successThumbs = [];
+            var errorItems = [];
             return new FileUploader({
                 //url: 'http://localhost:8080/_ah/upload/ahB2aWFjbmV6c3BlcmthcHAzciILEhVfX0Jsb2JVcGxvYWRTZXNzaW9uX18YgICAgICAoAsM',
                 url: '/upload',
@@ -56,6 +58,16 @@ angular.module('adduser', [])
                     console.log('thumbUrl: ' + response.thumbUrl);
                     console.log('imageUrl: ' + response.imageUrl);
                     successCallbackFn.apply(null, [response.gphotoId, response.thumbUrl, response.imageUrl]);
+                    successThumbs.push(response.thumbUrl);
+                },
+                onErrorItem: function(item, response, status, headers) {
+                    errorItems.push(response);
+                },
+                onCompleteAll: function() {
+                    var sum = successThumbs.length + errorItems.length;
+                    modalService.openUploadCompleteDialog(successThumbs, $filter('translate')('successfully_uploaded_photos') + ' ' + successThumbs.length + '/' + sum);
+                    successThumbs = [];
+                    errorItems = [];
                 }
             });
         };
@@ -67,9 +79,10 @@ angular.module('adduser', [])
         this.generateRandomPassword = function() {
             return Math.floor(Math.random() * (9999 - 1000) + 1000);
         };
+
     }])
 
-    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService) {
+    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', 'modalService', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService, modalService) {
         $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl) {
             console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl);
             if (angular.isUndefined($scope.child.galleryItems)) {
@@ -116,6 +129,18 @@ angular.module('adduser', [])
 
         $scope.toList = function() {
             $state.go('home.list');
+        };
+
+        $scope.deleteItem = function(item) {
+            modalService.openDeleteDialog(item.thumbUrl, function() {
+                item.deleted = 'deleted';
+                if (angular.isUndefined(item.crudAction)) {
+                    item.crudAction = 'delete';
+                } else {
+                    item.crudAction = undefined;
+                }
+                console.log('Image will be deleted.');
+            });
         };
 
     }

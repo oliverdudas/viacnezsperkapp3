@@ -231,12 +231,17 @@
                         <tr>
                             <td colspan="2">
                                     <span id="galleryItems">
-                                        <span ng-repeat="item in child.galleryItems" class="itemWrapper">
-                                            <!--<span class="deleteItem">-->
-                                                <!--<a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |-->
-                                                    <!--translate}}</a>-->
-                                            <!--</span>-->
-                                            <img src="{{item.thumbUrl}}" alt="...">
+                                        <span ng-repeat="item in child.galleryItems" class="itemContainer">
+                                            <span class="itemWrapper {{item.deleted}}">
+                                                <!--<span class="deleteItem">-->
+                                                    <!--<a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |-->
+                                                        <!--translate}}</a>-->
+                                                <!--</span>-->
+                                                <img src="{{item.thumbUrl}}" alt="...">
+                                                <!--<button type="button" ng-click="delete(item.identifier)" class="glyphicon glyphicon-remove btn btn-info">x</button>-->
+                                                <span ng-show="!item.deleted" ng-click="deleteItem(item)" class="glyphicon glyphicon-remove"></span>
+                                            </span>
+                                            <span ng-show="item.deleted" class="deleteInfo">{{'deletion_info_message' | translate}}</span>
                                         </span>
                                     </span>
                             </td>

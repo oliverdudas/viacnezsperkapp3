@@ -535,3 +535,76 @@ ul.nav.userlist li {
 input.number {
     text-align: right;
 }
+
+span#galleryItems span.itemWrapper {
+    box-shadow: 3px 5px 10px #888888;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 8px 8px 8px 8px;
+    margin: 10px;
+    position: relative;
+}
+
+span#galleryItems span.itemWrapper:hover {
+    box-shadow: 0 0 10px 5px #5bc0de;
+}
+
+span#galleryItems span.itemWrapper.deleted:hover {
+    box-shadow: 3px 5px 10px #888888;
+}
+
+
+span#galleryItems {
+    display: inline-block;
+    white-space: normal;
+}
+
+span#galleryItems span.itemContainer {
+    position: relative;
+}
+
+span#galleryItems span.itemContainer .deleteInfo {
+    left: 0;
+    z-index: 1001;
+    position: absolute;
+    top: -15px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+span#galleryItems span.itemWrapper.deleted {
+    opacity: 0.2;
+}
+
+span#galleryItems span.itemWrapper span.glyphicon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: none;
+    opacity: 0.5;
+    padding: 1px 1px;
+
+    transition:All 0.5s ease;
+    -webkit-transition:All 0.5s ease;
+    -moz-transition:All 0.5s ease;
+    -o-transition:All 0.5s ease;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform:  scale(1);
+    -o-transform:  scale(1);
+    -ms-transform:  scale(1);
+}
+
+span#galleryItems span.itemWrapper span.glyphicon:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(2);
+    -webkit-transform: scale(2);
+    -moz-transform: scale(2);
+    -o-transform: scale(2);
+    -ms-transform: scale(2);
+}
+
+span#galleryItems span.itemWrapper:hover span.glyphicon {
+    display: block;
+}

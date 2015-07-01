@@ -25,6 +25,8 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         modified: 'Upravené',
         modifiedBy: 'Upravil',
         delete: 'Zmazať',
+        delete_question_short: 'Naozaj zmazať?',
+        deletion_info_message: 'Obrázok bude zmazaný až po uložení zmien.',
         delete_question: 'Naozaj chcete zmazať tento záznam?',
         delete_image_question: 'Naozaj chcete zmazať fotografiu?',
         select_file: '[Vybrať foto]',
@@ -53,7 +55,9 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         size: 'Veľkosť',
         progress: 'Stav nahrávania',
         status: 'Status',
-        actions: 'Akcie'
+        actions: 'Akcie',
+        ok: 'OK',
+        successfully_uploaded_photos: 'Úspešne nahrané fotky'
     });
 
     $translateProvider.translations('en', {
