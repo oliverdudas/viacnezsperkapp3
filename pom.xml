@@ -10,7 +10,7 @@
 
     <properties>
         <app.id>viacnezsperkapp1</app.id>
-        <app.version>124</app.version>
+        <app.version>126</app.version>
         <appengine.version>1.9.22</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
@@ -135,6 +135,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Project github: https://github.com/eirslett/frontend-maven-plugin-->
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.version}</version>
@@ -165,6 +166,67 @@
               <configuration>
                 <set_default>true</set_default>
               </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <!-- NB! Set <version> to the latest released version of frontend-maven-plugin, like in README.md -->
+                <version>0.0.24</version>
+
+                <configuration>
+                    <!--The working directory is where you've put package.json and your frontend configuration files (Gruntfile.js or gulpfile.js etc).-->
+                    <workingDirectory>src/main/frontend</workingDirectory>
+                    <nodeVersion>v0.12.2</nodeVersion>
+                    <npmVersion>2.7.6</npmVersion>
+                </configuration>
+
+                <executions>
+
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <!-- optional: default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <!--<nodeVersion>v0.12.2</nodeVersion>--> <!--does not work, I had to put version parameters to global plugin configuration-->
+                            <!--<npmVersion>2.7.6</npmVersion>-->
+
+                            <!-- optional: where to download node and npm from. Defaults to http://nodejs.org/dist/ -->
+                            <!--<downloadRoot>http://myproxy.example.org/nodejs/dist/</downloadRoot>-->
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>gulp build</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+
+                        <!-- optional: the default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+
+                        <configuration>
+                            <!-- optional: if not specified, it will run gulp's default
+                            task (and you can remove this whole <configuration> section.) -->
+                            <!--<arguments>default</arguments>-->
+                            <arguments>default</arguments>
+                        </configuration>
+                    </execution>
+
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -1,0 +1,24 @@
+{
+  "name": "viacnezsperk",
+  "description": "Viac než šperk, občianske združenie je humanitárna organizácia, ktorá pomáha deťom v núdzi a osamelým matkám v najchudobnejších častiach Kene.",
+  "version": "2.0.0",
+  "homepage": "http://deti.viacnezpserk.sk",
+  "repository": "oliverdudas/viacnezsperkapp3",
+  "author": {
+    "name": "The Square s.r.o.",
+    "email": "oliverdudas@gmail.com",
+    "url": "https://github.com/oliverdudas"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "3.9.0",
+    "gulp-jshint": "1.11.1",
+    "gulp-concat": "2.6.0",
+    "gulp-uglify": "1.2.0",
+    "gulp-rename": "1.2.2",
+    "gulp-less": "3.0.3",
+    "gulp-minify-css": "1.2.0",
+    "tiny-lr": "0.1.6",
+    "gulp-livereload": "3.8.0"
+  }
+}

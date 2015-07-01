@@ -1,3 +1,7 @@
 .idea/
+node/
+src/main/frontend/node_modules/
+src/main/frontend/dist/
 target/
+npm-debug.log
 helloendpoints.iml
