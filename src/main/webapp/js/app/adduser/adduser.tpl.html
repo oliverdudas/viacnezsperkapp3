@@ -133,7 +133,7 @@
                     </span>-->
                     <span>
                         <span ng-repeat="item in mainURLs()" class="itemWrapper">
-                            <img src="{{item}}" alt="...">
+                            <img ng-src="{{item}}" alt="...">
                         </span>
                     </span>
                 </div>
@@ -237,7 +237,7 @@
                                                     <!--<a href="{{deleteGalleryItemUrl}}?gphotoId={{item.gphotoId}}">{{'delete' |-->
                                                         <!--translate}}</a>-->
                                                 <!--</span>-->
-                                                <img src="{{item.thumbUrl}}" alt="...">
+                                                <img ng-src="{{item.thumbUrl}}" alt="...">
                                                 <!--<button type="button" ng-click="delete(item.identifier)" class="glyphicon glyphicon-remove btn btn-info">x</button>-->
                                                 <span ng-show="!item.deleted" ng-click="deleteItem(item)" class="glyphicon glyphicon-remove"></span>
                                             </span>

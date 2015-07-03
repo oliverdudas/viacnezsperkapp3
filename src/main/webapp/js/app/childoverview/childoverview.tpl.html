@@ -51,7 +51,7 @@
                     <h2>{{'gallery' | translate}}</h2>
                             <span ng-repeat="item in user.galleryItems track by $index" class="homeGalleryItemWrapper">
                                 <a target="_blank" href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">
-                                    <img src="{{item.thumbUrl}}" alt="...">
+                                    <img ng-src="{{item.thumbUrl}}" alt="...">
                                 </a>
                             </span>
                 </div>
