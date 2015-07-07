@@ -7,6 +7,7 @@ angular.module('viacnezsperk', [
     //'ngAnimate',
     'pascalprecht.translate',
     'angular-google-gapi',
+    'jkuri.gallery',
     'modal',
     'model',
     'login',

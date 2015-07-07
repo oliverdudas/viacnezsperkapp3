@@ -26,7 +26,26 @@ angular.module('childoverview', [])
 
     }])
 
-    .controller('ChildoverviewController', ['$scope', '$state', 'modelHolder', '$sce', 'child', function ChildoverviewCtrl($scope, $state, modelHolder, $sce, child) {
+    .service('overviewService', [function() {
+
+        this.createGallerylist = function(galleryItems) {
+            var list = [];
+
+            for (var key in galleryItems) {
+                var item = galleryItems[key];
+                list.push({
+                    thumb: item.thumbUrl,
+                    img: item.imageUrl,
+                    description: ''
+                });
+            }
+
+            return list;
+        };
+
+    }])
+
+    .controller('ChildoverviewController', ['$scope', '$state', 'modelHolder', '$sce', 'child', 'overviewService', function ChildoverviewCtrl($scope, $state, modelHolder, $sce, child, overviewService) {
         $scope.user = child;
         $scope.validator = {
             validMainURL: function() {
@@ -46,6 +65,8 @@ angular.module('childoverview', [])
             }
 
         };
+
+        $scope.galleryList = overviewService.createGallerylist($scope.user.galleryItems);
 
         $scope.getHtmlContent = function() {
             return $sce.trustAsHtml($scope.user.content.value); //html content is th binded content.

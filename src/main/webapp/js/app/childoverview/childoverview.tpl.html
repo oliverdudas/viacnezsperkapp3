@@ -49,12 +49,14 @@
                 <div ng-show="validator.validGalleryItems" id="homeGallery">
                     <hr/>
                     <h2>{{'gallery' | translate}}</h2>
-                            <span ng-repeat="item in user.galleryItems track by $index" class="homeGalleryItemWrapper">
-                                <a target="_blank" href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">
-                                    <img ng-src="{{item.thumbUrl}}" alt="...">
-                                </a>
-                            </span>
+                            <!--<span ng-repeat="item in user.galleryItems track by $index" class="homeGalleryItemWrapper">-->
+                                <!--<a target="_blank" href="{{item.imageUrl}}" rel="prettyPhoto [gallery]">-->
+                                    <!--<img ng-src="{{item.thumbUrl}}" alt="...">-->
+                                <!--</a>-->
+                            <!--</span>-->
+                    <ng-gallery images="galleryList" thumbs-num="5"></ng-gallery>
                 </div>
+                <div style="clear: both;"></div>
                 <hr/>
                 <h2>{{'socialInfo' | translate}}</h2>
                 <div ng-bind-html="getHtmlContent()"></div>
