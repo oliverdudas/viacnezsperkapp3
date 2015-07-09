@@ -60,14 +60,14 @@ angular.module('home', [])
                 _list = null;
             },
 
-            unshiftItem: function(item) {
+            unshiftItem: function (item) {
                 if (_list === null) {
                     _list = [];
                 }
                 _list.unshift(item);
             },
 
-            deleteItem: function(key) {
+            deleteItem: function (key) {
                 if (_list !== null) {
                     var listIndex;
                     var item;
@@ -100,7 +100,7 @@ angular.module('home', [])
                 if (counter > 9) break;
 
                 user = users[key];
-                if (user.username.indexOf(q) === 0) {
+                if (user.username.toLowerCase().indexOf(q.toLowerCase()) === 0) {
                     result.push(user);
                     counter++;
                 }
@@ -108,6 +108,19 @@ angular.module('home', [])
             return result;
         };
     }])
+
+    .filter('highlightsearch', function () {
+        return function (username, searchstring) {
+            if (angular.isDefined(searchstring)) {
+                var searchLength = searchstring.length;
+                var searchPart = username.substring(0, searchLength);
+                var otherPart = username.substring(searchLength, username.length);
+                return "<strong>" + searchPart + "</strong>" + otherPart;
+            } else {
+                return username;
+            }
+        };
+    })
 
     .controller('ListController', ['$scope', '$state', 'GApi', 'listService', 'listHolder', function ListCtrl($scope, $state, GApi, listService, listHolder) {
 
@@ -143,7 +156,7 @@ angular.module('home', [])
             });
         };
 
-        $scope.toPreview = function(key, $event) {
+        $scope.toPreview = function (key, $event) {
             $event.stopPropagation();
             $state.go('home.childoverview', {key: key})
         };

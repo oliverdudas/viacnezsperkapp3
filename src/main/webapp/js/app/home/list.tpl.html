@@ -83,7 +83,8 @@
                     <tbody>
                         <tr ng-repeat="child in users track by $index" ng-click="edit(child.identifier)" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
                             <td class="firsttd">
-                                <div>{{child.username}}</div>
+                                <div ng-bind-html="child.username | highlightsearch : typeahead"></div>
+                                <!--<div>{{child.username}}</div>-->
                             </td>
                             <td class="td">
                                 <div>{{child.firstname}}</div>
