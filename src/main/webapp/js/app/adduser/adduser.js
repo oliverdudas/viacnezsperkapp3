@@ -57,7 +57,8 @@ angular.module('adduser', [])
                     console.log('gphotoId: ' + response.gphotoId);
                     console.log('thumbUrl: ' + response.thumbUrl);
                     console.log('imageUrl: ' + response.imageUrl);
-                    successCallbackFn.apply(null, [response.gphotoId, response.thumbUrl, response.imageUrl]);
+                    console.log('timestamp: ' + response.timestamp);
+                    successCallbackFn.apply(null, [response.gphotoId, response.thumbUrl, response.imageUrl, response.timestamp]);
                     successThumbs.push(response.thumbUrl);
                 },
                 onErrorItem: function(item, response, status, headers) {
@@ -83,8 +84,8 @@ angular.module('adduser', [])
     }])
 
     .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', 'modalService', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService, modalService) {
-        $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl) {
-            console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl);
+        $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl, timestamp) {
+            console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl + '\ntimestamp: ' + timestamp);
             if (angular.isUndefined($scope.child.galleryItems)) {
                 $scope.child.galleryItems = [];
             }
@@ -92,13 +93,14 @@ angular.module('adduser', [])
                 gphotoId: gphotoId,
                 imageUrl: imageUrl,
                 thumbUrl: thumbUrl,
+                timestamp: timestamp,
                 index: 1,
                 crudAction: 'put'
             });
         });
 
-        $scope.titleUploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl) {
-            console.log('Title uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl);
+        $scope.titleUploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl, timestamp) {
+            console.log('Title uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl + '\ntimestamp: ' + timestamp);
             $scope.child.mainURL = imageUrl;
         });
 

@@ -21,6 +21,7 @@ public class GalleryItemModel {
     private Long index;
     private String imageUrl;
     private String thumbUrl;
+    private Long timestamp;
 
     public Entity toEntity() {
         if (parentKey == null) {
@@ -31,6 +32,7 @@ public class GalleryItemModel {
         entity.setProperty("index", index);
         entity.setProperty("imageUrl", imageUrl);
         entity.setProperty("thumbUrl", thumbUrl);
+        entity.setProperty("timestamp", timestamp);
         return entity;
     }
 
@@ -42,6 +44,7 @@ public class GalleryItemModel {
         itemModel.setIndex(entity.getProperty("index") != null ? (Long) entity.getProperty("index") : null);
         itemModel.setImageUrl(entity.getProperty("imageUrl") != null ? (String) entity.getProperty("imageUrl") : null);
         itemModel.setThumbUrl(entity.getProperty("thumbUrl") != null ? (String) entity.getProperty("thumbUrl") : null);
+        itemModel.setTimestamp(entity.getProperty("timestamp") != null ? (Long) entity.getProperty("timestamp") : null);
         return itemModel;
     }
 
@@ -99,5 +102,13 @@ public class GalleryItemModel {
 
     public void setCrudAction(String crudAction) {
         this.crudAction = crudAction;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

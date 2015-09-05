@@ -6,6 +6,7 @@ import sk.olo.sperk.persinstence.ToolsDatastore;
 import sk.olo.sperk.persinstence.ToolsPersistence;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel getFullUser(String key) {
         ToolsPersistence persistence = new ToolsDatastore();
-        return persistence.getFullUser(key);
+        UserModel fullUser = persistence.getFullUser(key);
+        Collections.sort(fullUser.getGalleryItems(), new GalleryItemComparator());
+        return fullUser;
     }
 
     @Override

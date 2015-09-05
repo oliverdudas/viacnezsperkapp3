@@ -60,11 +60,12 @@ public class FileUploadServlet extends HttpServlet {
                 String imageUrl = ((MediaContent) photoEntry.getContent()).getUri();
                 String thumbUrl = photoEntry.getMediaThumbnails().get(1).getUrl();
                 String gphotoId = photoEntry.getGphotoId();
-
+                Long timestamp = photoEntry.getTimestamp().getTime();
 
                 out.print("{" +
                         "\"imageUrl\": \"" + imageUrl + "\"," +
                         "\"thumbUrl\": \"" + thumbUrl + "\"," +
+                        "\"timestamp\": \"" + timestamp + "\"," +
                         "\"gphotoId\": \"" + gphotoId + "\"}");
                 out.flush();
 
