@@ -10,7 +10,7 @@
 
     <properties>
         <app.id>viacnezsperkapp1</app.id>
-        <app.version>131</app.version>
+        <app.version>132</app.version>
         <appengine.version>1.9.22</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
 
