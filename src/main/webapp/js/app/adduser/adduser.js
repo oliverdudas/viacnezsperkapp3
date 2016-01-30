@@ -83,7 +83,7 @@ angular.module('adduser', [])
 
     }])
 
-    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', 'modalService', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService, modalService) {
+    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', 'modalService', '$filter', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService, modalService, $filter) {
         $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl, timestamp) {
             console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl + '\ntimestamp: ' + timestamp);
             if (angular.isUndefined($scope.child.galleryItems)) {
@@ -114,19 +114,38 @@ angular.module('adduser', [])
             $scope.child.password = addUserService.generateRandomPassword();
         };
 
-        $scope.put = function () {
-            GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
+        $scope.put = function (form) {
+            if (form.$valid) {
+                GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
 
-                //------------------------------------------------------------------------------------------//
-                // TODO: the putUser should return the child, that we can update listHolder with fresh data //
-                //------------------------------------------------------------------------------------------//
+                    //------------------------------------------------------------------------------------------//
+                    // TODO: the putUser should return the child, that we can update listHolder with fresh data //
+                    //------------------------------------------------------------------------------------------//
 
-                addUserService.prepareChild($scope.child, resp.identifier);
+                    addUserService.prepareChild($scope.child, resp.identifier);
 
-                $state.go('home.list');
-            }, function (resp) {
-                alert(resp.error.message);
-            });
+                    $state.go('home.list');
+                }, function (resp) {
+                    alert(resp.error.message);
+                });
+            } else {
+                var alertTitle = $filter('translate')('invalid_form');
+                var prepareContentValue = function() {
+                    var fields = [form.login_name, form.name, form.login_password];
+                    var result = '';
+                    angular.forEach(fields, function(value, key) {
+                        //this.push(key + ': ' + value);
+                        if (value.$invalid) {
+                            result = result + ' ' + $filter('translate')(value.$name) + ',';
+                        }
+                    });
+                  return result;
+                };
+                modalService.openAlert(alertTitle, prepareContentValue(), function() {
+                    console.log('Opening alert for invalid form');
+
+                });
+            }
         };
 
         $scope.toList = function() {

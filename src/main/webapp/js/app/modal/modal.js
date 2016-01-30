@@ -51,7 +51,7 @@ angular.module('modal', [])
             var modalInstance = $modal.open({
                 animation: true,
                 templateUrl: 'js/app/modal/modalupload.tpl.html',
-                controller: 'ModalUploadController',
+                controller: 'ModalController',
                 size: size,
                 resolve: {
                     content: function () {
@@ -63,7 +63,24 @@ angular.module('modal', [])
                 }
             });
 
-        }
+        };
+
+        this.openAlert = function(title, contentValue) {
+            var modalInstance = $modal.open({
+                animation: true,
+                templateUrl: 'js/app/modal/modalalert.tpl.html',
+                controller: 'ModalController',
+                size: 'sm',
+                resolve: {
+                    content: function() {
+                        return {
+                            title: title,
+                            value: contentValue
+                        };
+                    }
+                }
+            });
+        };
 
     }])
 
@@ -80,7 +97,7 @@ angular.module('modal', [])
         };
     }])
 
-    .controller('ModalUploadController', ['$scope', '$modalInstance', 'content', function ($scope, $modalInstance, content) {
+    .controller('ModalController', ['$scope', '$modalInstance', 'content', function ($scope, $modalInstance, content) {
 
         $scope.content = content;
 

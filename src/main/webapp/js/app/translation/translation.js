@@ -58,7 +58,8 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         status: 'Status',
         actions: 'Akcie',
         ok: 'OK',
-        successfully_uploaded_photos: 'Úspešne nahrané fotky'
+        successfully_uploaded_photos: 'Úspešne nahrané fotky',
+        invalid_form: 'Formulár nie je validný.\n Skontrolujte, prosím, nasledujúce polia:'
     });
 
     $translateProvider.translations('en', {

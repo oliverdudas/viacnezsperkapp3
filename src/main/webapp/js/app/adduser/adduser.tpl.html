@@ -1,74 +1,71 @@
 <div class="contentWrapper">
 
     <div>
-        <tabset vertical="true" type="pills">
+        <form action="" name="childForm" id="childFormId" enctype="multipart/form-data" novalidate>
+            <tabset vertical="true" type="pills">
             <tab heading="{{'child' | translate}}" class="tab">
                 <div class="formWrapper">
-
-                    <form action="" name="childForm" id="childFormId" enctype="multipart/form-data">
-
-                        <table class="formTable">
-                            <tr>
-                                <td class="label" title="{{'required' | translate}}">{{'login_name' | translate}}*:</td>
-                                <td class="value">
-                                    <input type="text" id="usernameId" ng-model="child.username"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label" title="{{'required' | translate}}">{{'login_password' | translate}}:</td>
-                                <td class="value">
-                                    <input type="text" id="passwordId" ng-model="child.password" class="number"/>
-                                    <button type="button" ng-click="generatePassword()" class="btn btn-info">{{'generate' | translate}}</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">{{'name' | translate}}:</td>
-                                <td class="value">
-                                    <input type="text" ng-model="child.firstname"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">{{'bornYear' | translate}}:</td>
-                                <td class="value">
-                                    <input ng-model="child.bornYear" type="text" class="number"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">{{'residence' | translate}}:</td>
-                                <td class="value">
-                                    <input type="text" ng-model="child.residence"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label" style="vertical-align: top;">{{'main_content' | translate}}:</td>
-                                <td class="value">
-                                    <textarea id="contentId" style="width: 700px; height: 130px;" ng-model="child.content.value"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">&nbsp;</td>
-                                <td class="value">
-                                    <button type="button" ng-click="delete()" class="btn btn-danger">{{'delete_child' | translate}}</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">{{'created' | translate}}:</td>
-                                <td class="value">{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</td>
-                            </tr>
-                            <!--<tr>-->
-                                <!--<td class="label">{{'createdBy' | translate}}:</td>-->
-                                <!--<td class="value">{{child.createdBy}}</td>-->
-                            <!--</tr>-->
-                            <tr>
-                                <td class="label">{{'modified' | translate}}:</td>
-                                <td class="value">{{ child.modified | date : 'dd.MM.yyyy HH:mm'}}</td>
-                            </tr>
-                            <!--<tr>-->
-                                <!--<td class="label">{{'modifiedBy' | translate}}:</td>-->
-                                <!--<td class="value">{{child.modifiedBy}}</td>-->
-                            <!--</tr>-->
-                        </table>
-                    </form>
+                    <table class="formTable">
+                        <tr>
+                            <td class="label" title="{{'required' | translate}}">{{'login_name' | translate}}*:</td>
+                            <td class="value">
+                                <input type="text" id="usernameId" name="login_name" ng-model="child.username" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" title="{{'required' | translate}}">{{'login_password' | translate}}*:</td>
+                            <td class="value">
+                                <input type="text" id="passwordId" name="login_password" ng-model="child.password" class="number" required/>
+                                <button type="button" ng-click="generatePassword()" class="btn btn-info">{{'generate' | translate}}</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{'name' | translate}}*:</td>
+                            <td class="value">
+                                <input type="text" name="name" ng-model="child.firstname" required=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{'bornYear' | translate}}:</td>
+                            <td class="value">
+                                <input ng-model="child.bornYear" type="text" class="number"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{'residence' | translate}}:</td>
+                            <td class="value">
+                                <input type="text" ng-model="child.residence"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top;">{{'main_content' | translate}}:</td>
+                            <td class="value">
+                                <textarea id="contentId" style="width: 700px; height: 130px;" ng-model="child.content.value"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">&nbsp;</td>
+                            <td class="value">
+                                <button type="button" ng-click="delete()" class="btn btn-danger">{{'delete_child' | translate}}</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{{'created' | translate}}:</td>
+                            <td class="value">{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</td>
+                        </tr>
+                        <!--<tr>-->
+                            <!--<td class="label">{{'createdBy' | translate}}:</td>-->
+                            <!--<td class="value">{{child.createdBy}}</td>-->
+                        <!--</tr>-->
+                        <tr>
+                            <td class="label">{{'modified' | translate}}:</td>
+                            <td class="value">{{ child.modified | date : 'dd.MM.yyyy HH:mm'}}</td>
+                        </tr>
+                        <!--<tr>-->
+                            <!--<td class="label">{{'modifiedBy' | translate}}:</td>-->
+                            <!--<td class="value">{{child.modifiedBy}}</td>-->
+                        <!--</tr>-->
+                    </table>
                 </div>
             </tab>
             <tab heading="{{'title_photo' | translate}}" class="tab">
@@ -250,19 +247,20 @@
                                             <span ng-show="item.deleted" class="deleteInfo">{{'deletion_info_message' | translate}}</span>
                                         </span>
                                     </span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </tab>
-        </tabset>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
 
-        <div class="submitArea">
-            <button type="button" class="btn btn-info" ng-click="put()" name="childFormSubmit">{{'save' | translate}}</button>
-            <button type="button" ng-click="toList()" class="btn btn-info">{{'cancel' | translate}}</button>
-            <!--<button ng-show="child.identifier != null" type="button" class="btn btn-info">{{'delete' | translate}}</button>-->
+            <div class="submitArea">
+                <button type="button" class="btn btn-info" ng-click="put(childForm)" name="childFormSubmit">{{'save' | translate}}</button>
+                <button type="button" ng-click="toList()" class="btn btn-info">{{'cancel' | translate}}</button>
+                <!--<button ng-show="child.identifier != null" type="button" class="btn btn-info">{{'delete' | translate}}</button>-->
+            </div>
+        </form>
+
         </div>
-
-    </div>
 
 </div>
