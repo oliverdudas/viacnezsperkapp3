@@ -18,6 +18,8 @@ public interface ToolsPersistence {
 
     List<UserModel> getUsers();
 
+    void deleteUser(String key);
+
 //    UserListHolder getUserList(String cursor);
 
 //    String putGalleryItem(GalleryItemModel galleryItemModel);

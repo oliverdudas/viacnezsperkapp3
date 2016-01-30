@@ -20,6 +20,29 @@ angular.module('modal', [])
             modalInstance.result.then(function (selectedItem) {
                 callbackFn.apply();
             }, function () {
+                console.log('Item deletion canceled.');
+            });
+        };
+
+        this.openUserDeleteDialog = function (child, callbackFn) {
+            var modalInstance = $modal.open({
+                animation: true,
+                templateUrl: 'js/app/modal/modaluserdelete.tpl.html',
+                controller: 'ModalController',
+                size: 'sm',
+                resolve: {
+                    content: function () {
+                        return {
+                            username: child.username
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                callbackFn.apply();
+            }, function () {
+                console.log('User deletion canceled.');
             });
         };
 

@@ -145,6 +145,21 @@ angular.module('adduser', [])
             });
         };
 
+        $scope.delete = function() {
+            modalService.openUserDeleteDialog($scope.child, function() {
+                console.log('Deleting child.');
+
+                var childIdentifier = $scope.child.identifier;
+                GApi.execute('viacnezsperkAPI', 'sperk.deleteuser', {identifier: childIdentifier}).then(function (resp) {
+                    console.log('Child deleted successfully.');
+                    listHolder.deleteItem(childIdentifier);
+                    $state.go('home.list');
+                }, function (resp) {
+                    alert(resp.error.message);
+                });
+            });
+        }
+
     }
     ])
     .directive('ngThumb', ['$window', function($window) {

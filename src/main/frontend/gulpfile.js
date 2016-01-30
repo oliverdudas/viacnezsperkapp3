@@ -49,5 +49,5 @@ gulp.task('watch', function () {
 // Default Task
 gulp.task('build-release', ['lint', 'scripts', 'less']);
 //gulp.task('default', ['lr-server', 'lint', 'scripts', 'less', 'watch']);
-gulp.task('default', []);
+gulp.task('default', ['lint', 'scripts', 'less']);
 

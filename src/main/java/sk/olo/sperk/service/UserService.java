@@ -20,6 +20,8 @@ public interface UserService {
 
     List<UserModel> getUsers();
 
+    void deleteUser(String key);
+
 //    String putGalleryItem(GalleryItemModel galleryItemModel);
 
 //    String putRole(RoleModel roleModel);

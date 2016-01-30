@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
         return persistence.getUsers();
     }
 
+    @Override
+    public void deleteUser(String key) {
+        ToolsPersistence persistence = new ToolsDatastore();
+        persistence.deleteUser(key);
+    }
+
     public void createTestUsers() {
         String[] usernames = new String[]{
                 "test1", "test2", "test3", "test4", "test5", "test6", "test7",

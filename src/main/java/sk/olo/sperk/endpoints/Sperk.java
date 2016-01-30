@@ -71,6 +71,12 @@ public class Sperk {
         return service.getUsers();
     }
 
+    @ApiMethod(name="sperk.deleteuser", path = "usermodel/deleteuser")
+    public void deleteUser(@Named("identifier") String identifier) {
+        UserService service = new UserServiceImpl();
+        service.deleteUser(identifier);
+    }
+
 //    public KeyModel storePerson() {
 //        UserService service = new UserServiceImpl();
 //        return new KeyModel(service.storePerson());

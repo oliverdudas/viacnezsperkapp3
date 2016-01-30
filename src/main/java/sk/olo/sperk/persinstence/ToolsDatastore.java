@@ -142,6 +142,12 @@ public class ToolsDatastore implements ToolsPersistence {
         return users;
     }
 
+    @Override
+    public void deleteUser(String key) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.delete(KeyFactory.stringToKey(key));
+    }
+
     private Key generateKey(String kind, long count) {
         return DatastoreServiceFactory.getDatastoreService().allocateIds(kind, count).getStart();
     }

@@ -46,6 +46,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="label">&nbsp;</td>
+                                <td class="value">
+                                    <button type="button" ng-click="delete()" class="btn btn-danger">{{'delete_child' | translate}}</button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="label">{{'created' | translate}}:</td>
                                 <td class="value">{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</td>
                             </tr>
