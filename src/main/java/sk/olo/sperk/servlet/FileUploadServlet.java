@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -60,7 +61,7 @@ public class FileUploadServlet extends HttpServlet {
                 String imageUrl = ((MediaContent) photoEntry.getContent()).getUri();
                 String thumbUrl = photoEntry.getMediaThumbnails().get(1).getUrl();
                 String gphotoId = photoEntry.getGphotoId();
-                Long timestamp = photoEntry.getTimestamp().getTime();
+                Long timestamp = new Date().getTime();
 
                 out.print("{" +
                         "\"imageUrl\": \"" + imageUrl + "\"," +
