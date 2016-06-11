@@ -6,6 +6,7 @@ angular.module('viacnezsperk', [
     'angularFileUpload',
     //'ngAnimate',
     'pascalprecht.translate',
+    'ngCookies',
     'angular-google-gapi',
     'jkuri.gallery',
     'modal',
@@ -16,7 +17,7 @@ angular.module('viacnezsperk', [
     'childoverview'
 ])
 
-    .run(['GAuth', 'GApi', 'GData', '$state', '$rootScope', '$window', 'modelHolder', function (GAuth, GApi, GData, $state, $rootScope, $window, modelHolder) {
+    .run(['GAuth', 'GApi', 'GData', '$state', '$rootScope', '$window', 'modelHolder', '$translate', function (GAuth, GApi, GData, $state, $rootScope, $window, modelHolder, $translate) {
           //viacnezsperkapp1
           var CLIENT = '539843283811-7c9egdebuur3uc27qrpsacijml19264j.apps.googleusercontent.com';
         //  viacnezsperkapp3
@@ -81,6 +82,10 @@ angular.module('viacnezsperk', [
             return GData.getUser() != null ? GData.getUser().email : '';
         };
 
+        $rootScope.useLanguage = function(langKey) {
+            $translate.use(langKey);
+        };
+
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             if (toState.name !== 'home.login' && !$rootScope.isLogin() && modelHolder.getChild() == null) {
                 event.preventDefault();
@@ -94,6 +99,12 @@ angular.module('viacnezsperk', [
             // transitionTo() promise will be rejected with
             // a 'transition prevented' error
         });
+
+        //$rootScope.$on('$translateChangeEnd', function (key) {
+        //    console.log('change: ' + key);
+        //    Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
+        //});
+
 
     }
     ])

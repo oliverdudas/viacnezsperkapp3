@@ -144,9 +144,9 @@ angular.module('home', [])
             $state.go('home.adduser', {key: key});
         };
 
-        $scope.$on('$viewContentLoaded', function () {
-            Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
-        });
+        //$scope.$on('$viewContentLoaded', function () {
+        //    Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
+        //});
 
         $scope.test = function () {
             GApi.execute('viacnezsperkAPI', 'sperk.getDummyRequest').then(function (resp) {

@@ -42,6 +42,18 @@ h2 {
     font-weight: normal;
 }
 
+.languageItemEn {
+    position: absolute;
+    top: 30px;
+    right: 0;
+}
+
+.languageItemSk {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
 #main {
     font-size: 0.813em;
     min-width: 960px;
