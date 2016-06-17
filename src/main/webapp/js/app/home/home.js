@@ -46,6 +46,28 @@ angular.module('home', [])
 
     .factory('listHolder', [function () {
         var _list = null;
+        var _pager = {
+            pageNumber: 1,
+            itemsPerPage: 10,
+            isFirstPage: function() {
+                return this.pageNumber === 1;
+            },
+            isLastPage: function() {
+                var size = _list.length;
+                var maxLast = this.pageNumber * this.itemsPerPage;
+                return size <= (size <= maxLast && size > (maxLast - itemsPerPage ))
+            },
+            isValidPage: function(pageNumber) {
+                return pageNumber > 0 && (pageNumber * this.itemsPerPage - this.itemsPerPage < _list.length);
+            },
+            getStartIndex: function() {
+                return this.getEndIndex() - this.itemsPerPage;
+            },
+            getEndIndex: function() {
+                return this.pageNumber * this.itemsPerPage;
+            }
+        };
+
         return {
 
             setList: function (list) {
@@ -56,8 +78,19 @@ angular.module('home', [])
                 return _list;
             },
 
+            getListPage: function (pageNumber) {
+                if (_pager.isValidPage(pageNumber)) {
+                    _pager.pageNumber = pageNumber;
+                }
+                return _list.slice(_pager.getStartIndex(), _pager.getEndIndex());
+            },
+
             clearList: function () {
                 _list = null;
+            },
+
+            getPager: function() {
+                return _pager;
             },
 
             unshiftItem: function (item) {
@@ -82,7 +115,7 @@ angular.module('home', [])
         }
     }])
 
-    .service('listService', [function () {
+    .service('listService', ['listHolder', function (listHolder) {
         //this.filterUsers = function(users, q) {
         //    var counter = 0;
         //    return users.filter(function (user, index) {
@@ -95,9 +128,10 @@ angular.module('home', [])
             var key;
             var user;
             var result = [];
-            var counter = 0;
+            var counter = 1;
+            var itemsPerPage = listHolder.getItemsPerPage();
             for (key in users) {
-                if (counter > 9) break;
+                if (counter > itemsPerPage) break;
 
                 user = users[key];
                 if (user.username.toLowerCase().indexOf(q.toLowerCase()) === 0) {
@@ -128,7 +162,13 @@ angular.module('home', [])
             return listHolder.getList();
         };
 
-        $scope.users = getUsers().slice(0, 10);
+        $scope.users = listHolder.getListPage(1);
+
+        $scope.pager = listHolder.getPager();
+
+        $scope.applyPager = function(direction) {
+            $scope.users = listHolder.getListPage(listHolder.getPager().pageNumber + direction);
+        };
 
         $scope.$watch('typeahead', function (newVal, oldVal) {
             if (newVal !== oldVal) {

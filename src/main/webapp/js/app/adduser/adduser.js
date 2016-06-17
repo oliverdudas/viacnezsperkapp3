@@ -83,7 +83,7 @@ angular.module('adduser', [])
 
     }])
 
-    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'child', 'listHolder', 'addUserService', 'modalService', '$filter', function AddUserCtrl($scope, $state, GApi, GAuth, child, listHolder, addUserService, modalService, $filter) {
+    .controller('AddUserController', ['$scope', '$state', 'GApi', 'GAuth', 'GData', 'child', 'listHolder', 'addUserService', 'modalService', '$filter', function AddUserCtrl($scope, $state, GApi, GAuth, GData, child, listHolder, addUserService, modalService, $filter) {
         $scope.uploader = addUserService.createUploader(function(gphotoId, thumbUrl, imageUrl, timestamp) {
             console.log('Gallery uploader done: \ngphotoId: ' + gphotoId + '\nthumbUrl: ' + thumbUrl + '\nimageUrl: ' + imageUrl + '\ntimestamp: ' + timestamp);
             if (angular.isUndefined($scope.child.galleryItems)) {
@@ -116,6 +116,8 @@ angular.module('adduser', [])
 
         $scope.put = function (form) {
             if (form.$valid) {
+                $scope.child.modifiedBy = GData.getUser().name;
+                $scope.child.createdBy = GData.getUser().name;
                 GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
 
                     //------------------------------------------------------------------------------------------//
