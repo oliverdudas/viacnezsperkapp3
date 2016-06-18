@@ -44,29 +44,60 @@ angular.module('home', [])
 
     }])
 
+    .factory('pager', ['listHolder', function(listHoler) {
+        var _pageNumber = 1;
+        var _itemsPerPage = 10;
+
+        var _isFirstPage = function() {
+            return _pageNumber === 1;
+        };
+
+        var _isLastPage = function() {
+            var size = listHoler.getListSize();
+            var maxLast = _pageNumber * _itemsPerPage;
+            return size <= (size <= maxLast && size > (maxLast - _itemsPerPage ));
+        };
+
+        var _isValidPage = function(pageNumber) {
+            return pageNumber > 0 && (pageNumber * _itemsPerPage - _itemsPerPage < listHoler.getListSize());
+        };
+
+        var _getEndIndex = function() {
+            return _pageNumber * _itemsPerPage;
+        };
+
+        var _getStartIndex = function() {
+            return _getEndIndex() - _itemsPerPage;
+        };
+
+        var _getItems = function (direction) {
+            var newPageNumber = _pageNumber + direction;
+            if (_isValidPage(newPageNumber)) {
+                _pageNumber = newPageNumber;
+            }
+            return listHoler.getList().slice(_getStartIndex(), _getEndIndex());
+        };
+
+        return {
+
+            getPageNumber: function() {
+                return _pageNumber;
+            },
+
+            getItemsPerPage: function() {
+                return _itemsPerPage;
+            },
+
+            apply: function(direction, callbackFn) {
+                var items = _getItems(direction);
+                callbackFn.call(undefined, items);
+            }
+
+        };
+    }])
+
     .factory('listHolder', [function () {
         var _list = null;
-        var _pager = {
-            pageNumber: 1,
-            itemsPerPage: 10,
-            isFirstPage: function() {
-                return this.pageNumber === 1;
-            },
-            isLastPage: function() {
-                var size = _list.length;
-                var maxLast = this.pageNumber * this.itemsPerPage;
-                return size <= (size <= maxLast && size > (maxLast - itemsPerPage ))
-            },
-            isValidPage: function(pageNumber) {
-                return pageNumber > 0 && (pageNumber * this.itemsPerPage - this.itemsPerPage < _list.length);
-            },
-            getStartIndex: function() {
-                return this.getEndIndex() - this.itemsPerPage;
-            },
-            getEndIndex: function() {
-                return this.pageNumber * this.itemsPerPage;
-            }
-        };
 
         return {
 
@@ -78,19 +109,12 @@ angular.module('home', [])
                 return _list;
             },
 
-            getListPage: function (pageNumber) {
-                if (_pager.isValidPage(pageNumber)) {
-                    _pager.pageNumber = pageNumber;
-                }
-                return _list.slice(_pager.getStartIndex(), _pager.getEndIndex());
+            getListSize: function() {
+                return this.getList().length;
             },
 
             clearList: function () {
                 _list = null;
-            },
-
-            getPager: function() {
-                return _pager;
             },
 
             unshiftItem: function (item) {
@@ -115,21 +139,13 @@ angular.module('home', [])
         }
     }])
 
-    .service('listService', ['listHolder', function (listHolder) {
-        //this.filterUsers = function(users, q) {
-        //    var counter = 0;
-        //    return users.filter(function (user, index) {
-        //        if (counter > 9) return false;
-        //        counter++;
-        //        return user.username.indexOf(q) === 0;
-        //    });
-        //};
+    .service('listService', ['pager', function (pager) {
         this.filterUsers = function (users, q) {
             var key;
             var user;
             var result = [];
             var counter = 1;
-            var itemsPerPage = listHolder.getPager().itemsPerPage;
+            var itemsPerPage = pager.getItemsPerPage();
             for (key in users) {
                 if (counter > itemsPerPage) break;
 
@@ -156,23 +172,21 @@ angular.module('home', [])
         };
     })
 
-    .controller('ListController', ['$scope', '$state', 'GApi', 'listService', 'listHolder', function ListCtrl($scope, $state, GApi, listService, listHolder) {
+    .controller('ListController', ['$scope', '$state', 'GApi', 'listService', 'listHolder', 'pager', function ListCtrl($scope, $state, GApi, listService, listHolder, pager) {
 
-        var getUsers = function () {
-            return listHolder.getList();
-        };
-
-        $scope.users = listHolder.getListPage(1);
-
-        $scope.pager = listHolder.getPager();
+        $scope.pager = pager;
 
         $scope.applyPager = function(direction) {
-            $scope.users = listHolder.getListPage(listHolder.getPager().pageNumber + direction);
+            pager.apply(direction, function(items) {
+                $scope.users = items;
+            });
         };
+
+        $scope.applyPager(0);
 
         $scope.$watch('typeahead', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                $scope.users = listService.filterUsers(getUsers(), newVal);
+                $scope.users = listService.filterUsers(listHolder.getList(), newVal);
             }
         });
 

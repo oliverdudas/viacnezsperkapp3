@@ -40,7 +40,7 @@
 
             <div style="position: relative;">
                 <input type="text" ng-model="typeahead" style="margin-bottom: 20px;">
-                <span style="position: absolute; right: 0;">
+                <span style="position: absolute; left: 185px;">
                     <button type="button" ng-click="applyPager(-1)" class="btn btn-info"><</button>
                     <button type="button" ng-click="applyPager(1)" class="btn btn-info">></button>
                 </span>
@@ -94,7 +94,7 @@
                     <tbody>
                         <tr ng-repeat="child in users track by $index" ng-click="edit(child.identifier)" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
                             <td class="firsttd">
-                                <div>{{pager.pageNumber * pager.itemsPerPage - pager.itemsPerPage + $index + 1}}.</div>
+                                <div>{{pager.getPageNumber() * pager.getItemsPerPage() - pager.getItemsPerPage() + $index + 1}}.</div>
                             </td>
                             <td class="td">
                                 <div ng-bind-html="child.username | highlightsearch : typeahead"></div>
