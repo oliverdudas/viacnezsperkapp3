@@ -129,7 +129,7 @@ angular.module('home', [])
             var user;
             var result = [];
             var counter = 1;
-            var itemsPerPage = listHolder.getItemsPerPage();
+            var itemsPerPage = listHolder.getPager().itemsPerPage;
             for (key in users) {
                 if (counter > itemsPerPage) break;
 
