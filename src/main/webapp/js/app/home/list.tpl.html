@@ -38,12 +38,13 @@
                 <!--Username: {{user.username}} Age: {{user.age}}-->
             <!--</div>-->
 
-            <div style="position: relative;">
-                <input type="text" ng-model="typeahead" style="margin-bottom: 20px;">
-                <span style="position: absolute; left: 185px;">
-                    <button type="button" ng-click="applyPager(-1)" class="btn btn-info"><</button>
-                    <button type="button" ng-click="applyPager(1)" class="btn btn-info">></button>
-                </span>
+            <div class="tableHeader">
+                <input type="text" ng-model="typeahead" class="filter">
+                <div class="tablePager">
+                    <button type="button" ng-click="pager.applyWithFilter(-1, typeahead)" class="btn btn-info" ng-class="{disabled: pager.isFirstPage()}"><</button>
+                    <div class="pageInfo">{{pager.getPageNumber()}} / {{pager.getLastPageNumber()}}</div>
+                    <button type="button" ng-click="pager.applyWithFilter(1, typeahead)" class="btn btn-info" ng-class="{disabled: pager.isLastPage()}">></button>
+                </div>
             </div>
 
             <!--<div ng-animate="'animate'" ng-repeat="child in users track by $index" ng-click="edit(child.key)" style="padding: 10px;">-->
@@ -92,32 +93,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="child in users track by $index" ng-click="edit(child.identifier)" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+                        <tr ng-repeat="item in pager.getItems() track by $index" ng-click="edit(item.identifier)" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
                             <td class="firsttd">
                                 <div>{{pager.getPageNumber() * pager.getItemsPerPage() - pager.getItemsPerPage() + $index + 1}}.</div>
                             </td>
                             <td class="td">
-                                <div ng-bind-html="child.username | highlightsearch : typeahead"></div>
-                                <!--<div>{{child.username}}</div>-->
+                                <div ng-bind-html="item.username | highlightsearch : typeahead"></div>
+                                <!--<div>{{item.username}}</div>-->
                             </td>
                             <td class="td">
-                                <div>{{child.firstname}}</div>
+                                <div>{{item.firstname}}</div>
                             </td>
                             <td class="td">
-                                <div>{{ child.modified | date : 'dd.MM.yyyy HH:mm'}}</div>
+                                <div>{{ item.modified | date : 'dd.MM.yyyy HH:mm'}}</div>
                             </td>
                             <td class="td">
-                                <div>{{ child.modifiedBy}}</div>
+                                <div>{{ item.modifiedBy}}</div>
                             </td>
                             <td class="td">
-                                <div>{{ child.created | date : 'dd.MM.yyyy HH:mm'}}</div>
+                                <div>{{ item.created | date : 'dd.MM.yyyy HH:mm'}}</div>
                             </td>
                             <td class="td">
-                                <div>{{ child.createdBy}}</div>
+                                <div>{{ item.createdBy}}</div>
                             </td>
                             <td class="lasttd">
                                 <div>
-                                    <a class="insightClass" href ng-click="toPreview(child.identifier, $event)">{{'insight' | translate}}</a>
+                                    <a class="insightClass" href ng-click="toPreview(item.identifier, $event)">{{'insight' | translate}}</a>
                                 </div>
                             </td>
                         </tr>

@@ -44,22 +44,24 @@ angular.module('home', [])
 
     }])
 
-    .factory('pager', ['listHolder', function(listHoler) {
-        var _pageNumber = 1;
+    .factory('pager', ['listHolder', 'listService', function(listHolder, listService) {
+        var _items = undefined;
+        var _filteredItems = undefined;
+        var _firstPageNumber = 1;
+        var _pageNumber = _firstPageNumber;
         var _itemsPerPage = 10;
 
         var _isFirstPage = function() {
-            return _pageNumber === 1;
+            return _pageNumber === _firstPageNumber;
         };
 
         var _isLastPage = function() {
-            var size = listHoler.getListSize();
-            var maxLast = _pageNumber * _itemsPerPage;
-            return size <= (size <= maxLast && size > (maxLast - _itemsPerPage ));
+            var nextPageNumber = _pageNumber + 1;
+            return nextPageNumber * _itemsPerPage - _itemsPerPage >= _filteredItems.length;
         };
 
         var _isValidPage = function(pageNumber) {
-            return pageNumber > 0 && (pageNumber * _itemsPerPage - _itemsPerPage < listHoler.getListSize());
+            return pageNumber >= _firstPageNumber && pageNumber <= _getLastPageNumber();
         };
 
         var _getEndIndex = function() {
@@ -70,27 +72,57 @@ angular.module('home', [])
             return _getEndIndex() - _itemsPerPage;
         };
 
-        var _getItems = function (direction) {
+        var _getLastPageNumber = function() {
+            return Math.ceil(_filteredItems.length / _itemsPerPage);
+        };
+
+        var _apply = function(direction) {
+            _applyWithFilter(direction, "");
+        };
+
+        var _applyWithFilter = function(direction, q) {
+            _filteredItems = listService.filterUsers(listHolder.getList(), q);
             var newPageNumber = _pageNumber + direction;
             if (_isValidPage(newPageNumber)) {
                 _pageNumber = newPageNumber;
+            } else if (newPageNumber > _getLastPageNumber()) {
+                _pageNumber = _getLastPageNumber();
             }
-            return listHoler.getList().slice(_getStartIndex(), _getEndIndex());
+            _items = _filteredItems.slice(_getStartIndex(), _getEndIndex());
         };
 
         return {
 
+            apply: function(direction) {
+                _apply(direction);
+            },
+
+            applyWithFilter: function(direction, q) {
+                _applyWithFilter(direction, q);
+            },
+
+            getItems: function() {
+                return _items;
+            },
+
             getPageNumber: function() {
                 return _pageNumber;
+            },
+
+            getLastPageNumber: function() {
+                return _getLastPageNumber();
             },
 
             getItemsPerPage: function() {
                 return _itemsPerPage;
             },
 
-            apply: function(direction, callbackFn) {
-                var items = _getItems(direction);
-                callbackFn.call(undefined, items);
+            isFirstPage: function() {
+                return _isFirstPage();
+            },
+
+            isLastPage: function() {
+                return _isLastPage();
             }
 
         };
@@ -139,20 +171,24 @@ angular.module('home', [])
         }
     }])
 
-    .service('listService', ['pager', function (pager) {
+    .service('listService', [function () {
         this.filterUsers = function (users, q) {
             var key;
             var user;
             var result = [];
             var counter = 1;
-            var itemsPerPage = pager.getItemsPerPage();
-            for (key in users) {
-                if (counter > itemsPerPage) break;
+            var itemsPerPage = 30;
+            if (angular.isUndefined(q) || q === "") {
+                result = users;
+            } else {
+                for (key in users) {
+                    if (counter > itemsPerPage) break;
 
-                user = users[key];
-                if (user.username.toLowerCase().indexOf(q.toLowerCase()) === 0) {
-                    result.push(user);
-                    counter++;
+                    user = users[key];
+                    if (user.username.toLowerCase().indexOf(q.toLowerCase()) === 0) {
+                        result.push(user);
+                        counter++;
+                    }
                 }
             }
             return result;
@@ -176,17 +212,11 @@ angular.module('home', [])
 
         $scope.pager = pager;
 
-        $scope.applyPager = function(direction) {
-            pager.apply(direction, function(items) {
-                $scope.users = items;
-            });
-        };
-
-        $scope.applyPager(0);
+        pager.apply(0);
 
         $scope.$watch('typeahead', function (newVal, oldVal) {
             if (newVal !== oldVal) {
-                $scope.users = listService.filterUsers(listHolder.getList(), newVal);
+                pager.applyWithFilter(0, newVal);
             }
         });
 
@@ -197,10 +227,6 @@ angular.module('home', [])
         $scope.edit = function (key) {
             $state.go('home.adduser', {key: key});
         };
-
-        //$scope.$on('$viewContentLoaded', function () {
-        //    Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
-        //});
 
         $scope.test = function () {
             GApi.execute('viacnezsperkAPI', 'sperk.getDummyRequest').then(function (resp) {
@@ -215,7 +241,9 @@ angular.module('home', [])
             $state.go('home.childoverview', {key: key})
         };
 
-        //$scope.$on('$routeChangeSuccess', function () {
+        //$scope.$on('$viewContentLoaded', function () {
+        //    Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
+        //});        //$scope.$on('$routeChangeSuccess', function () {
         //    Cufon.replace('h1', { fontFamily:'ArnoPro', hover:true });
         //});
         //$scope.executeCufon = function() {

@@ -258,6 +258,28 @@ ul.nav a {
     border-radius: 0 5px 5px 0;
 }
 
+.tableHeader {
+    position: relative;
+}
+
+.tableHeader .filter {
+    margin-bottom: 20px;
+}
+
+.tableHeader .tablePager {
+    position: absolute;
+    left: 185px;
+    display: inline-block;
+}
+
+.tableHeader .tablePager .pageInfo {
+    display: inline-block;
+    text-align: center;
+    width: 60px;
+}
+
+
+
 .tableContent {
     padding: 10px;
     border-radius: 14px 14px 14px 14px;
