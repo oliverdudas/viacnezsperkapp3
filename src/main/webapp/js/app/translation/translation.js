@@ -59,7 +59,8 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         actions: 'Akcie',
         ok: 'OK',
         successfully_uploaded_photos: 'Úspešne nahrané fotky',
-        invalid_form: 'Formulár nie je validný.\n Skontrolujte, prosím, nasledujúce polia:'
+        invalid_form: 'Formulár nie je validný.\n Skontrolujte, prosím, nasledujúce polia:',
+        loading: 'Načítavam, prosím čakajte.'
     });
 
     $translateProvider.translations('en', {
@@ -122,7 +123,8 @@ angular.module('viacnezsperk').config(['$translateProvider', function ($translat
         actions: 'Actions',
         ok: 'OK',
         successfully_uploaded_photos: 'Successfully uploaded photos',
-        invalid_form: 'The form is invalid.\n Please, check fields:'
+        invalid_form: 'The form is invalid.\n Please, check fields:',
+        loading: 'Loading, please wait.'
     });
 
     $translateProvider.preferredLanguage('sk');

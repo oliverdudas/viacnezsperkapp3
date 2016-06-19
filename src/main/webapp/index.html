@@ -31,7 +31,11 @@
     <!--</section>-->
 
     <div class="container">
-        <div ui-view="content"></div>
+        <div ui-view="content">
+            <div style="text-align: center; margin-top: 50px;">
+                <div>{{'loading' | translate}}</div>
+                <img src="images/loader2.gif">
+            </div>
     </div>
 
     <footer id="footer">
