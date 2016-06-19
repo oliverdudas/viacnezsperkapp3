@@ -8,18 +8,35 @@ angular.module('adduser', [])
                     controller: 'AddUserController',
                     templateUrl: 'js/app/adduser/adduser.tpl.html',
                     resolve: {
-                        child: function(GApi, $stateParams) {
+                        child: function($q, GApi, $stateParams, $state) {
                             if ($stateParams.key) {
                                 return GApi.execute('viacnezsperkAPI', 'sperk.fulluser', {identifier: $stateParams.key}).then(function (resp) {
                                     return resp;
-                                }, function () {
-                                    console.log("error :(");
+                                }, function (resp) {
+                                    console.log(resp.error.message);
+                                    $state.go('home.login');
+                                    //return $q.reject(resp.error.message);
                                 });
                             } else {
                                 return {};
                             }
                         }
                     }
+                    //resolve: {
+                    //    authenticated: ['$q', 'AccountService', function ($q, accountService) {
+                    //        var deferred = $q.defer();
+                    //        accountService.userLoggedIn().then(function (loggedIn) {
+                    //            if (loggedIn) {
+                    //                deferred.resolve();
+                    //            } else {
+                    //                deferred.reject('Not logged in'); <-- This happens
+                    //            }
+                    //        });
+                    //
+                    //        return deferred.promise;
+                    //
+                    //    }]
+                    //}
                 }
             }
         })
@@ -116,8 +133,10 @@ angular.module('adduser', [])
 
         $scope.put = function (form) {
             if (form.$valid) {
-                $scope.child.modifiedBy = GData.getUser().name;
-                $scope.child.createdBy = GData.getUser().name;
+                $scope.child.modifiedBy = GData.getUser().email.split('@')[0];
+                if (!$scope.child.createdBy) {
+                    $scope.child.createdBy = GData.getUser().email.split('@')[0];
+                }
                 GApi.execute('viacnezsperkAPI', 'sperk.putUser', $scope.child).then(function (resp) {
 
                     //------------------------------------------------------------------------------------------//

@@ -35,14 +35,14 @@ angular.module('viacnezsperk', [
         GAuth.setClient(CLIENT);
         GAuth.setScope('email https://picasaweb.google.com/data/');
 
-        //GAuth.checkAuth().then(
-        //    function () {
-        //        $state.go('home.list');
-        //    },
-        //    function () {
-        //        $state.go('home.login');
-        //    }
-        //);
+        GAuth.checkAuth().then(
+            function () {
+                $state.go('home.list');
+            },
+            function () {
+                $state.go('home.login');
+            }
+        );
 
         $rootScope.logout = function () {
             GAuth.logout().then(
@@ -53,12 +53,7 @@ angular.module('viacnezsperk', [
 
         $rootScope.doLogin = function () {
             GAuth.login().then(function () {
-                $rootScope.email = GData.getUser().email;
-                if ($rootScope.email.indexOf('viacnezsperk.sk') != -1) {
-                    $state.go('home.list');
-                } else {
-                    $rootScope.logout();
-                }
+                $state.go('home.list');
             });
         };
 
@@ -86,30 +81,42 @@ angular.module('viacnezsperk', [
             $translate.use(langKey);
         };
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            if (toState.name !== 'home.login' && !$rootScope.isLogin() && modelHolder.getChild() == null) {
-                event.preventDefault();
-                $state.go('home.login');
-            }
-
-            if (toState === 'home.login' && $rootScope.isLogin()) {
-                event.preventDefault();
-                $state.go('home.list');
-            }
-            // transitionTo() promise will be rejected with
-            // a 'transition prevented' error
-        });
-
         //$rootScope.$on('$translateChangeEnd', function (key) {
         //    console.log('change: ' + key);
         //    Cufon.replace('h1', {fontFamily: 'ArnoPro', hover: true});
         //});
 
+    }])
 
-    }
-    ])
+    .factory('myHttpInterceptor', function($q) {
+        return {
+            // optional method
+            'request': function(config) {
+                return config;
+            },
+            // optional method
+            'requestError': function(rejection) {
+                //if (canRecover(rejection)) {
+                //    return responseOrNewPromise
+                //}
+                return $q.reject(rejection);
+            },
+            // optional method
+            'response': function(response) {
+                return response;
+            },
+            // optional method
+            'responseError': function(rejection) {
+                //if (canRecover(rejection)) {
+                //    return responseOrNewPromise
+                //}
+                return $q.reject(rejection);
+            }
+        };
+    })
 
-    .config(['$urlRouterProvider', function ($urlRouterProvider) {
-        $urlRouterProvider.otherwise("/list");
+    .config(['$urlRouterProvider', '$httpProvider', function ($urlRouterProvider, $httpProvider) {
+        $httpProvider.interceptors.push('myHttpInterceptor');
+        //$urlRouterProvider.otherwise("/login");
     }]);
 

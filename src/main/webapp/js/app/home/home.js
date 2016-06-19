@@ -24,14 +24,16 @@ angular.module('home', [])
                     controller: 'ListController',
                     templateUrl: 'js/app/home/list.tpl.html',
                     resolve: {
-                        users: function (GApi, listHolder) {
+                        users: function ($q, GApi, listHolder, $state) {
                             var list = listHolder.getList();
                             if (list === null) {
                                 return GApi.execute('viacnezsperkAPI', 'sperk.getUsers').then(function (resp) {
                                     listHolder.setList(resp.items);
                                     return listHolder.getList();
-                                }, function () {
-                                    console.log("error :(");
+                                }, function (resp) {
+                                    console.log(resp.error.message);
+                                    $state.go('home.login');
+                                    //return $q.reject(resp.error.message);
                                 });
                             } else {
                                 return list;
@@ -61,7 +63,7 @@ angular.module('home', [])
         };
 
         var _isValidPage = function(pageNumber) {
-            return pageNumber >= _firstPageNumber && pageNumber <= _getLastPageNumber();
+            return pageNumber > 0 && pageNumber >= _firstPageNumber && pageNumber <= _getLastPageNumber();
         };
 
         var _getEndIndex = function() {
@@ -87,6 +89,8 @@ angular.module('home', [])
                 _pageNumber = newPageNumber;
             } else if (newPageNumber > _getLastPageNumber()) {
                 _pageNumber = _getLastPageNumber();
+            } else if (_pageNumber === 0 &&_getLastPageNumber() > 0) {
+                _pageNumber = 1;
             }
             _items = _filteredItems.slice(_getStartIndex(), _getEndIndex());
         };
