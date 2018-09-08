@@ -3,11 +3,11 @@ package sk.olo.sperk.servlet;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.appengine.repackaged.org.codehaus.jackson.map.DeserializationConfig;
-import com.google.appengine.repackaged.org.codehaus.jackson.map.ObjectMapper;
 import com.google.gdata.data.MediaContent;
 import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.util.common.base.Preconditions;
+import endpoints.repackaged.com.fasterxml.jackson.databind.DeserializationFeature;
+import endpoints.repackaged.com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -57,7 +57,7 @@ public class FileUploadServlet extends HttpServlet {
                 PhotoEntry photoEntry = picasaManager.uploadPhotoToPicasa(item, accessToken);
 
                 ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 String imageUrl = ((MediaContent) photoEntry.getContent()).getUri();
                 objectMapper.writeValue(out, new ImageUploadResponse(
                         imageUrl,

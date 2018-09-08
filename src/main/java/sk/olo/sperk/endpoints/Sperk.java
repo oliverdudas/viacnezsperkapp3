@@ -6,8 +6,8 @@ import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
-import com.google.appengine.repackaged.org.codehaus.jackson.map.DeserializationConfig;
-import com.google.appengine.repackaged.org.codehaus.jackson.map.ObjectMapper;
+import endpoints.repackaged.com.fasterxml.jackson.databind.DeserializationFeature;
+import endpoints.repackaged.com.fasterxml.jackson.databind.ObjectMapper;
 import sk.olo.sperk.exception.SperkOAuthRequestException;
 import sk.olo.sperk.model.GoogleUser;
 import sk.olo.sperk.model.KeyModel;
@@ -135,7 +135,7 @@ public class Sperk {
             String accessToken = authorization.split(" ")[1];
             String userInfoJson = fetchUserInfo(accessToken);
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return objectMapper.readValue(userInfoJson, GoogleUser.class);
         } else {
             throw new SperkOAuthRequestException("NOT_AUTHORIZED");
