@@ -23,7 +23,7 @@ public class PicasaManagerImpl implements PicasaManager {
     private static final String VIACNEZSPERK = "viacnezsperk";
     private static final String GOOGLE_USER_ID = "104004273393078620402";
 //    private static final String GOOGLE_USER_EMAIL = "oliver.dudas@viacnezsperk.sk";
-//    private static final String GOOGLE_USER_EMAIL_PASSWORD = "sperk123";
+//    private static final String GOOGLE_USER_EMAIL_PASSWORD = "***";
 
     @Override
     public PhotoEntry uploadPhotoToPicasa(FileItemStream file, String accessToken) throws IOException, ServiceException {
