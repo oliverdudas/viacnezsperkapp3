@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+@Deprecated
+/**
+ * Not used anymore. Instead the AUTOMATIC SSL_MANAGEMENT by GCP is used
+ */
 public class LetsencryptServlet extends HttpServlet {
 
     public static final Map<String, String> challenges = new HashMap<>();
